@@ -9,20 +9,27 @@ import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
 import android.util.DisplayMetrics
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import com.google.android.material.snackbar.Snackbar
+import com.rymo.felfel.R
 import com.rymo.felfel.configuration.AlarmApplication
+import com.rymo.felfel.configuration.Store
+import com.rymo.felfel.util.formatToast
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -231,7 +238,7 @@ fun hideKeyboard(activity: Activity) {
     }
 }
 
-fun shareText(message: String,mContext:Context) {
+fun shareText(message: String, mContext: Context) {
     val sharingIntent = Intent(Intent.ACTION_SEND)
     sharingIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
     sharingIntent.type = "text/plain"
@@ -252,4 +259,19 @@ fun getFormattedDate(timeInString: String, format: String): Date {
 
 fun startActivity(mActivity: Activity, intent: Intent) {
     mActivity.startActivity(intent)
+}
+
+fun showSnackBar(rootView: View?, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+    rootView?.let {
+        val snackBar = Snackbar.make(it, message, duration)
+        snackBar.show()
+        val snackBarView = snackBar.view
+        snackBarView.setBackgroundColor(
+            AlarmApplication.instance!!.resources.getColor(R.color.black)
+        )
+        val textMessage =
+            snackBarView.findViewById<View>(R.id.snackbar_text) as TextView
+        textMessage.setTextColor(AlarmApplication.instance!!.resources.getColor(R.color.white))
+
+    }
 }

@@ -30,7 +30,7 @@ class SplashActivity : Base.BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
 
-        object : CountDownTimer(100, 100) {
+        object : CountDownTimer(2000, 2000) {
             override fun onTick(p0: Long) {
 
             }

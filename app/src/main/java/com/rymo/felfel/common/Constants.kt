@@ -29,6 +29,7 @@ object Constants {
     const val SHP_LANGUAGE = "LANGUAGE"
     const val SHP_THEME = "THEME"
     const val SHP_FIRST_OPEN_ALARM = "SHP_FIRST_OPEN_ALARM"
+    const val SHP_LAST_MESSAGE_DATE = "SHP_LAST_MESSAGE_DATE"
     const val SHP_CURRENT_USER_ID = "CURRENT_USER_ID"
     const val SHP_DEVICE_ID_ID = "DEVICE_ID"
     const val SHP_FCM_TOKEN = "FCM_TOKEN"

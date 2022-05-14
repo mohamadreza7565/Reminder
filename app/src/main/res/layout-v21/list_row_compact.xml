@@ -70,7 +70,7 @@
                 android:layout_marginRight="5dp"
                 android:paddingTop="2dip"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?colorPrimary"
                 tools:text="Weekdays" />
 
             <TextView
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?colorPrimary"
                 tools:text="label" />
         </LinearLayout>
     </LinearLayout>
@@ -106,7 +106,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clickable="false"
-                android:focusable="false" />
+                android:checked="false"
+                android:trackTint="@color/switch_button_color"
+                android:thumbTint="@color/switch_button_color"
+                android:focusable="false"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <View
                 android:layout_width="0dp"

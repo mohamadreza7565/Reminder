@@ -38,9 +38,18 @@ class AlarmDetailsViewModel(private val appDatabase: RoomAppDatabase) : Base.Bas
         }
     }
 
-    fun updateContactAlarm(alarmId: Long){
+    fun updateContactAlarm(alarmId: Long) {
         contactDao.deleteContactAlarm(alarmId)
         addAlarmContacts(alarmId)
+    }
+
+    fun getSizeAlarmContact(): Int {
+        var size = 0
+        contacts.forEach {
+            if (it.selected)
+                size++
+        }
+        return size
     }
 
 }

@@ -213,4 +213,17 @@
     <string name="submit">تایید</string>
     <string name="contactIsEmpty">مخاطبی ثبت نشده است</string>
     <string name="message">متن پیام ارسالی</string>
+    <string name="appName">فلفل</string>
+    <string name="dateLastMessage">تاریخ آخرین پیام ارسالی</string>
+    <string name="autoMessage">پیام خودکار</string>
+    <string name="settings">تنظیمات</string>
+    <string name="report">گزارش گیری</string>
+    <string name="notSendAnyMessage">پیامی ارسال نشده</string>
+    <string name="autoMessageList">پیام های خودکار</string>
+    <string name="notSelectedContact">مخاطبی انتخاب نشده است</string>
+    <string name="contactSelected">مخاطب انتخاب شده است</string>
+    <string name="inputMessage">متن پیام را وارد کنید</string>
+    <string name="selectContactOne">حداقل یک مخاطب را انتخاب کنید</string>
+    <string name="deleteFromAlarmContactWhenContactDeleted">با حذف مخاطب از تمام پیام های خودکار نیز حذف می شود</string>
+    <string name="doYouWantDeleteContact">با اطمینان مخاطب را حذف می کنید ؟</string>
 </resources>

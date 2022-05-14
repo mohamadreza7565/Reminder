@@ -83,10 +83,11 @@ val acraEmail =
         ?: System.getenv()["ACRA_EMAIL"] ?: ""
 
 android {
+
     compileSdk = 32
     defaultConfig {
-        versionCode = 31007
-        versionName = "3.10.07"
+        versionCode = 1
+        versionName = "1.0.0"
         applicationId = "com.rymo.felfel"
         minSdk = 21
         targetSdk = 32
@@ -104,6 +105,7 @@ android {
             isTestCoverageEnabled = true
             buildConfigField("String", "ACRA_EMAIL", "\"$acraEmail\"")
             applicationIdSuffix = ".debug"
+
         }
         getByName("release") {
             isMinifyEnabled = false
@@ -116,7 +118,6 @@ android {
 
     productFlavors {
         create("develop") { applicationId = "com.rymo.felfel" }
-        create("premium") { applicationId = "com.premium.alarm" }
     }
 
     installation {

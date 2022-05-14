@@ -8,9 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.rymo.felfel.view.BaseToolbar
             android:layout_width="match_parent"
-            android:layout_height="56dp" />
+            android:layout_height="56dp"
+            android:id="@+id/toolbarView"
+            app:bt_background="?colorPrimary"
+            app:bt_showBack="true"
+            app:bt_tint="?colorOnPrimary"
+            app:bt_title="@string/contacts" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contactsRv"
@@ -20,14 +25,14 @@
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="20dp"
-            android:id="@+id/fab"
             android:gravity="center"
             android:text="@string/addNewContact"
-            />
+            app:backgroundTint="?colorPrimary" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

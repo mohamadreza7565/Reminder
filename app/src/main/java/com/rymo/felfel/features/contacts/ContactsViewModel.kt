@@ -27,6 +27,7 @@ class ContactsViewModel(private val appDatabase: RoomAppDatabase) : Base.BaseVie
 
     fun deleteContact(contact: Contact) {
         contactDao.deleteContact(contact)
+        contactDao.deleteContactAlarmByContactId(contact.id)
     }
 
     fun editContact(contact: Contact) {

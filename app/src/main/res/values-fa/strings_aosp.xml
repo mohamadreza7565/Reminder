@@ -15,11 +15,11 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="alarm_list_title" msgid="7589940465292950600">"زنگ های ساعت"</string>
-    <string name="add_alarm" msgid="5976616107390962899">"افزودن زنگ ساعت"</string>
-    <string name="delete_alarm" msgid="3457780990646206817">"حذف زنگ ساعت"</string>
-    <string name="enable_alarm" msgid="1834599140632142536">"روشن کردن زنگ ساعت"</string>
-    <string name="disable_alarm" msgid="5889378670229554109">"خاموش کردن زنگ ساعت"</string>
-    <string name="delete_alarm_confirm" msgid="6578572637340860840">"این هشدار حذف شود؟"</string>
+    <string name="add_alarm" msgid="5976616107390962899">"افزودن پیام خودکار"</string>
+    <string name="delete_alarm" msgid="3457780990646206817">"حذف پیام خودکار"</string>
+    <string name="enable_alarm" msgid="1834599140632142536">"روشن کردن پیام خودکار"</string>
+    <string name="disable_alarm" msgid="5889378670229554109">"خاموش کردن پیام خودکار"</string>
+    <string name="delete_alarm_confirm" msgid="6578572637340860840">"این پیام خودکار حذف شود؟"</string>
     <string name="label" msgid="162189613902857319">"برچسب"</string>
     <string name="alarm_vibrate" msgid="3476686921490362230">"لرزش"</string>
     <string name="alarm_repeat" msgid="7242985466344233206">"تکرار"</string>
@@ -47,7 +47,6 @@
     <string name="every_day" msgid="4100909974923444602">"هر روز"</string>
     <string name="never" msgid="54104287800571769">"هرگز"</string>
     <string name="day_concat" msgid="971998564991636532">"، "</string>
-    <string name="settings" msgid="5849739030579520686">"تنظیمات"</string>
     <string name="generatePermissions" msgid="5849739030579520686">"دسترسی ها"</string>
     <string name="main" msgid="5849739030579520686">"خانه"</string>
 

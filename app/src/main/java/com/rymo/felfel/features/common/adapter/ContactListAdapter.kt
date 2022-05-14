@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rymo.felfel.R
+import com.rymo.felfel.common.gone
 import com.rymo.felfel.configuration.AlarmApplication
 import com.rymo.felfel.databinding.ContactListItemBinding
 import com.rymo.felfel.model.Contact
@@ -58,10 +59,13 @@ class ContactListAdapter(
 
             itemBinding.nameTv.text = contact.nameAndFamily
             itemBinding.phoneTv.text = contact.phone
-            itemBinding.restaurantNameTitleTv.text = contact.companyName
+            itemBinding.restaurantNameTv.text = contact.companyName
+            if (contact.companyName.isEmpty()){
+                itemBinding.restaurantNameTitleTv.gone()
+            }
 
             if (contact.selected) {
-                itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.blueLight))
+                itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.redLight2))
             } else {
                 itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.white))
             }

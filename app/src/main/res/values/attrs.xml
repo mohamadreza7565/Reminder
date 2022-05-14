@@ -26,6 +26,8 @@
     <declare-styleable name="BaseToolbar">
         <attr name="bt_title" format="string"/>
         <attr name="bt_showBack"  format="boolean"/>
+        <attr name="bt_tint"  format="color"/>
+        <attr name="bt_background"  format="color"/>
     </declare-styleable>
 
 </resources>

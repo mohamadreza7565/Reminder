@@ -28,6 +28,7 @@ import com.rymo.felfel.CHANNEL_ID_HIGH_PRIO
 import com.rymo.felfel.R
 import com.rymo.felfel.alert.AlarmAlertFullScreen
 import com.rymo.felfel.common.convertListToMutableList
+import com.rymo.felfel.data.preferences.Setting
 import com.rymo.felfel.database.createDataBaseInstance
 import com.rymo.felfel.interfaces.Intents
 import com.rymo.felfel.interfaces.PresentationToModelIntents
@@ -36,6 +37,7 @@ import com.rymo.felfel.logger.Logger
 import com.rymo.felfel.notificationBuilder
 import com.rymo.felfel.pendingIntentUpdateCurrentFlag
 import timber.log.Timber
+import java.util.*
 
 /**
  * Glue class: connects AlarmAlert IntentReceiver to AlarmAlert activity. Passes through Alarm ID.
@@ -57,11 +59,14 @@ class NotificationsPlugin(
 
         alarmContacts.forEach {
             val contact = contactDao.getContact(it.contactId)
-            val messageToSend = alarm.label
-            val number = contact.phone
-            SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null, null)
+            if (contact != null) {
+                val messageToSend = alarm.label
+                val number = contact.phone
+                SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null, null)
+            }
         }
 
+        Setting.lastMessageDate = Calendar.getInstance().time.time
 
         val notify = Intent(mContext, AlarmAlertFullScreen::class.java)
         notify.putExtra(Intents.EXTRA_ID, alarm.id)

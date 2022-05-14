@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -266,13 +267,13 @@ class Base {
                             retryBtn.text = textRetry
                         }
 
-//                        if (bellowToolbar) {
-//                            var params =
-//                                layout?.layoutParams as FrameLayout.LayoutParams
-//                            params.setMargins(
-//                                0, convertDpToPixel(100f, AlarmApplication.instance!!).toInt(), 0, 0
-//                            )
-//                        }
+                        if (bellowToolbar) {
+                            var params =
+                                layout?.layoutParams as FrameLayout.LayoutParams
+                            params.setMargins(
+                                0, convertDpToPixel(100f, AlarmApplication.instance!!).toInt(), 0, 0
+                            )
+                        }
 
                         errorView?.visibility = if (mustShow) View.VISIBLE else View.GONE
 

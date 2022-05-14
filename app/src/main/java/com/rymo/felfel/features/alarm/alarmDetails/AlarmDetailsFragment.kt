@@ -17,6 +17,7 @@
 
 package com.rymo.felfel.features.alarm.alarmDetails
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.Ringtone
 import android.media.RingtoneManager
@@ -33,6 +34,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.rymo.felfel.R
 import com.rymo.felfel.checkPermissions
+import com.rymo.felfel.common.showSnackBar
 import com.rymo.felfel.configuration.Layout
 import com.rymo.felfel.configuration.Prefs
 import com.rymo.felfel.configuration.globalInject
@@ -48,6 +50,7 @@ import com.rymo.felfel.model.AlarmValue
 import com.rymo.felfel.model.Alarmtone
 import com.rymo.felfel.util.Optional
 import com.rymo.felfel.util.modify
+import com.rymo.felfel.view.BaseToolbar
 import com.rymo.felfel.view.showDialog
 import com.rymo.felfel.view.summary
 import io.reactivex.Observable
@@ -65,9 +68,10 @@ class AlarmDetailsFragment : Fragment() {
     private val logger: Logger by globalLogger("AlarmDetailsFragment")
     private val prefs: Prefs by globalInject()
     private var disposables = CompositeDisposable()
-
+    private lateinit var detailsContacts: TextView
     private var backButtonSub: Disposable = Disposables.disposed()
     private var disposableDialog = Disposables.disposed()
+    private lateinit var label: EditText
 
     private val alarmsListActivity by lazy { activity as AlarmsListActivity }
     private val store: UiStore by globalInject()
@@ -90,6 +94,7 @@ class AlarmDetailsFragment : Fragment() {
 
     private val ringtonePickerRequestCode = 42
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -109,7 +114,15 @@ class AlarmDetailsFragment : Fragment() {
             )
         this.fragmentView = view
 
+        initView()
+
         disposables = CompositeDisposable()
+
+
+        val toolbarView: BaseToolbar = view.findViewById(R.id.toolbarView)
+        toolbarView.onBackButtonClickListener = View.OnClickListener {
+            revert()
+        }
 
         onCreateTopRowView()
         onCreateRepeatView()
@@ -123,6 +136,12 @@ class AlarmDetailsFragment : Fragment() {
                 mViewModel.getContacts()
             } else {
                 mViewModel.getContacts(alarmId.toLong())
+                val size = mViewModel.getSizeAlarmContact()
+                if (size == 0) {
+                    detailsContacts.text = getString(R.string.notSelectedContact)
+                } else {
+                    detailsContacts.text = "$size ${getString(R.string.contactSelected)}"
+                }
             }
             store.transitioningToNewAlarmDetails().onNext(false)
         }
@@ -130,8 +149,23 @@ class AlarmDetailsFragment : Fragment() {
         return view
     }
 
+    private fun initView() {
+        detailsContacts = fragmentView.findViewById(R.id.details_contacts)
+        label = fragmentView.findViewById<EditText>(R.id.details_label)
+    }
+
     private fun onCreateBottomView() {
         fragmentView.findViewById<View>(R.id.details_activity_button_save).setOnClickListener {
+
+            if (mViewModel.getSizeAlarmContact() == 0) {
+                showSnackBar(fragmentView, getString(R.string.selectContactOne))
+                return@setOnClickListener
+            }
+            if (label.text.toString().isEmpty()) {
+                showSnackBar(fragmentView, getString(R.string.inputMessage))
+                return@setOnClickListener
+            }
+
             store.transitioningToNewAlarmDetails().takeFirst { isNewAlarm ->
                 if (isNewAlarm) {
                     mViewModel.addAlarmContacts(alarmId.toLong())
@@ -141,6 +175,7 @@ class AlarmDetailsFragment : Fragment() {
             }
 
             saveAlarm()
+
         }
         fragmentView.findViewById<View>(R.id.details_activity_button_revert).setOnClickListener {
             revert()
@@ -148,8 +183,6 @@ class AlarmDetailsFragment : Fragment() {
     }
 
     private fun onCreateLabelView() {
-        val label: EditText = fragmentView.findViewById<EditText>(R.id.details_label)
-
         observeEditor { value ->
             if (value.label != label.text.toString()) {
                 label.setText(value.label)
@@ -189,11 +222,19 @@ class AlarmDetailsFragment : Fragment() {
         observeEditor { value -> repeatSummary.text = value.daysOfWeek.summary(requireContext()) }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun onCreateContactView() {
 
         fragmentView.findViewById<LinearLayout>(R.id.details_contacts_row).setOnClickListener {
             ContactsListDialog(requireContext(), mViewModel.contacts) {
                 mViewModel.contacts = it
+                val size = mViewModel.getSizeAlarmContact()
+                if (size == 0) {
+                    detailsContacts.text = getString(R.string.notSelectedContact)
+                } else {
+                    detailsContacts.text = "$size ${getString(R.string.contactSelected)}"
+                }
+
             }.show(childFragmentManager, "CONTACT_LIST")
         }
 

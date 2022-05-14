@@ -31,6 +31,7 @@ import com.rymo.felfel.data.preferences.Setting
 import com.rymo.felfel.database.RoomAppDatabase
 import com.rymo.felfel.database.dao.ContactDao
 import com.rymo.felfel.features.alarm.*
+import com.rymo.felfel.view.BaseToolbar
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
@@ -54,7 +55,7 @@ class AlarmsListFragment : Fragment() {
     private val uiStore: UiStore by globalInject()
     private val prefs: Prefs by globalInject()
     private val logger: Logger by globalLogger("AlarmsListFragment")
-    private var sorted : List<AlarmValue> = ArrayList()
+    private var sorted: List<AlarmValue> = ArrayList()
 
     private val mAdapter: AlarmListAdapter by lazy {
         AlarmListAdapter(R.layout.list_row_classic, R.string.alarm_list_title, ArrayList())
@@ -240,6 +241,11 @@ class AlarmsListFragment : Fragment() {
         val fab: View = view.findViewById(R.id.fab)
         fab.setOnClickListener { uiStore.createNewAlarm() }
 
+        val toolbarView: BaseToolbar = view.findViewById(R.id.toolbarView)
+        toolbarView.onBackButtonClickListener = View.OnClickListener {
+            requireActivity().finish()
+        }
+
         lollipop { (fab as FloatingActionButton).attachToListView(listView) }
 
         alarmsSub =
@@ -250,7 +256,7 @@ class AlarmsListFragment : Fragment() {
                     if (transitioning) Observable.never() else store.alarms()
                 }
                 .subscribe { alarms ->
-                     sorted =
+                    sorted =
                         alarms //
                             .sortedBy { it.minutes }
                             .sortedBy { it.hour }
@@ -267,7 +273,7 @@ class AlarmsListFragment : Fragment() {
                     mAdapter.addAll(sorted)
                 }
 
-        if(Setting.firstOpenAlarmList) {
+        if (Setting.firstOpenAlarmList) {
             sorted.forEach {
                 Timber.e(it.hour.toString())
                 alarms.getAlarm(it.id)?.delete()

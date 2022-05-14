@@ -34,6 +34,8 @@
     <color name="blue">#217CF3</color>
     <color name="blueLight">#ADD1FF</color>
     <color name="red">#ee3a57</color>
+    <color name="redLight">#DF5268</color>
+    <color name="redLight2">#E199A4</color>
     <color name="gray">#EFEFEF</color>
     <color name="darkGray">#B3B6BE</color>
     <color name="transparent">#00000000</color>

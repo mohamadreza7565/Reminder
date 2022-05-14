@@ -25,7 +25,7 @@
         <item name="colorOnSurface">@color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/red</item>
         <item name="android:navigationBarColor">@color/bottomNavColor</item>
 
         <!-- Customize your theme here. -->

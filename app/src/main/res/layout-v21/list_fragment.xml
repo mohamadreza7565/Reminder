@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.rymo.felfel.view.BaseToolbar
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:bt_background="?colorPrimary"
+        app:bt_showBack="true"
+        app:bt_tint="?colorOnPrimary"
+        app:bt_title="@string/autoMessageList" />
+
     <ListView
         android:id="@+id/list_fragment_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="56dp"
         android:layout_marginRight="15dp"
         android:layout_weight="1"
         tools:layout="@layout/list_fragment"
@@ -24,9 +34,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|right"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="100dp"
+        android:layout_margin="28dp"
         android:elevation="6dp"
-        android:src="@drawable/ic_baseline_add_24" />
+        android:src="@drawable/ic_baseline_add_24"
+        app:fab_colorNormal="@color/red" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

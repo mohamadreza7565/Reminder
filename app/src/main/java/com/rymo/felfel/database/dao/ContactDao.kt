@@ -22,6 +22,9 @@ interface ContactDao {
     @Query("DELETE FROM tbl_alarm_contact WHERE alarmId = :alarmId")
     fun deleteContactAlarm(alarmId: Long)
 
+    @Query("DELETE FROM tbl_alarm_contact WHERE contactId = :contactId")
+    fun deleteContactAlarmByContactId(contactId: Long)
+
     @Delete
     fun deleteContact(contact: Contact)
 
@@ -32,6 +35,6 @@ interface ContactDao {
     fun getContact(): List<Contact>
 
     @Query("SELECT * FROM tbl_contact WHERE id = :contactId")
-    fun getContact(contactId: Long): Contact
+    fun getContact(contactId: Long): Contact?
 
 }

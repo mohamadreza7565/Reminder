@@ -18,18 +18,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/details_list_row_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <include layout="@layout/list_row_compact"></include>
+        <com.rymo.felfel.view.BaseToolbar
+            android:id="@+id/toolbarView"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:bt_background="?colorPrimary"
+            app:bt_showBack="true"
+            app:bt_tint="?colorOnPrimary" />
+
+        <include layout="@layout/list_row_compact"/>
+
     </LinearLayout>
 
     <include layout="@layout/details_fragment_lower"></include>

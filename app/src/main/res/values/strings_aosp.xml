@@ -146,8 +146,6 @@
 
     <!-- Label for analog clock gadget, shown in list of all gadgets -->
 
-    <!-- Menu item title for general Alarm Clock Settings -->
-    <string name="settings">Settings</string>
 
 
     <!-- Menu item title for general Alarm Clock permissions -->

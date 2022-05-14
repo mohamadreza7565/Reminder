@@ -56,6 +56,16 @@ object Setting {
             GlobalPreferences.setBoolean(Constants.SHP_FIRST_OPEN_ALARM, firstOpenAlarmList)
         }
 
+    var lastMessageDate: Long
+        get() {
+            return GlobalPreferences.getLong(
+                Constants.SHP_LAST_MESSAGE_DATE, 0
+            )
+        }
+        set(lastMessageDate) {
+            GlobalPreferences.setLong(Constants.SHP_LAST_MESSAGE_DATE, lastMessageDate)
+        }
+
     fun clearPreferences() {
         GlobalPreferences.clearPreferences()
     }

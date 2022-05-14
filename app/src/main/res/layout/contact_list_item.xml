@@ -1,72 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-   <com.google.android.material.card.MaterialCardView
-       android:layout_width="match_parent"
-       android:id="@+id/itemCv"
-       android:layout_height="wrap_content"
-       android:layout_margin="4dp"
-       app:cardCornerRadius="@dimen/cornerRadius"
-       app:cardElevation="@dimen/elevation">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/itemCv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="@dimen/cornerRadius"
+        app:cardElevation="@dimen/elevation">
 
-       <androidx.constraintlayout.widget.ConstraintLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-           <TextView
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               tools:text="محمدرضا الله قلی"
-               android:textAppearance="?textAppearanceHeadline5"
-               android:gravity="start"
-               android:textColor="?colorOnBackground"
-               app:layout_constraintEnd_toStartOf="@+id/phoneTv"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toTopOf="parent"
-               android:layout_marginTop="16dp"
-               android:layout_marginStart="16dp"
-               android:id="@+id/nameTv"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/nameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_toStartOf="@+id/phoneTv"
+                    android:gravity="start"
+                    android:textAppearance="?textAppearanceHeadline5"
+                    android:textColor="?colorOnBackground"
+                    tools:text="محمدرضا الله قلی" />
+
+                <TextView
+                    android:id="@+id/phoneTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textAppearance="?textAppearanceHeadline4"
+                    tools:text="09106768929" />
 
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/restaurantNameTitleTv"
-               app:layout_constraintTop_toBottomOf="@+id/nameTv"
-               app:layout_constraintStart_toStartOf="parent"
-               android:layout_marginStart="16dp"
-               android:layout_marginTop="8dp"
-               android:textColor="?colorOnBackground"
-               android:text="@string/restaurantNameTitle"/>
+            </RelativeLayout>
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               app:layout_constraintBottom_toBottomOf="parent"
-               android:layout_marginBottom="16dp"
-               tools:text="نام رستوران"
-               app:layout_constraintTop_toBottomOf="@+id/nameTv"
-               app:layout_constraintStart_toStartOf="parent"
-               android:layout_marginStart="16dp"
-               app:layout_constraintStart_toEndOf="@+id/restaurantNameTitleTv"
-               android:layout_marginTop="8dp"
-               android:textColor="?colorOnBackground"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
-               android:id="@+id/phoneTv"
-               android:layout_marginTop="16dp"
-               android:layout_marginEnd="16dp"
-               android:textAppearance="?textAppearanceHeadline4"
-               tools:text="09106768929"/>
+                <TextView
+                    android:id="@+id/restaurantNameTitleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/restaurantNameTitle"
+                    android:textColor="?colorOnBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nameTv" />
 
-       </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/restaurantNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="?colorOnBackground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="نام رستوران" />
 
-   </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

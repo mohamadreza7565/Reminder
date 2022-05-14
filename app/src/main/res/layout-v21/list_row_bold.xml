@@ -35,7 +35,7 @@
             android:id="@+id/list_row_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/colorAccent"
+            android:textColor="?colorPrimary"
             tools:text="label" />
 
         <com.rymo.felfel.view.DigitalClock
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="2dip"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/colorAccent"
+            android:textColor="?colorPrimary"
             tools:text="Weekdays" />
     </LinearLayout>
 
@@ -96,10 +96,13 @@
 
             <Switch
                 android:id="@+id/list_row_on_off_switch"
+                android:trackTint="@color/switch_button_color"
+                android:thumbTint="@color/switch_button_color"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clickable="false"
-                android:focusable="false" />
+                android:focusable="false"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <View
                 android:layout_width="0dp"

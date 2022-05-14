@@ -24,8 +24,11 @@
             android:id="@+id/list_row_on_off_switch"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:trackTint="@color/switch_button_color"
+            android:thumbTint="@color/switch_button_color"
             android:clickable="false"
-            android:focusable="false" />
+            android:focusable="false"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <View
             android:layout_width="0dp"
@@ -74,14 +77,14 @@
             android:layout_height="wrap_content"
             android:text="Weekdays"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/colorAccent" />
+            android:textColor="?colorPrimary" />
 
         <TextView
             android:id="@+id/list_row_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="label"
-            android:textColor="?android:attr/colorAccent" />
+            android:textColor="?colorPrimary" />
     </LinearLayout>
 
     <LinearLayout
