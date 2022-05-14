@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".features.reports.ReportsActivity">
+
+
+        <com.rymo.felfel.view.BaseToolbar
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/toolbarView"
+            app:bt_background="?colorPrimary"
+            app:bt_showBack="true"
+            app:bt_tint="?colorOnPrimary"
+            app:bt_title="@string/report" />
+
+        <include layout="@layout/include_tab" />
+
+
+        <com.rymo.felfel.view.rtl_view_pager.RtlViewPager
+            android:id="@+id/vViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

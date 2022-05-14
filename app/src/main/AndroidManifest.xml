@@ -47,11 +47,12 @@
         android:supportsRtl="true"
         android:theme="@style/AlarmAlertFullScreenLightTheme"
         tools:targetApi="lollipop">
-
+        <activity
+            android:name=".features.reports.ReportsActivity"
+            android:exported="false" />
         <activity
             android:name=".features.contacts.ContactsActivity"
-            android:exported="false" />
-        <!-- Activity to set a new or modify existing alarm -->
+            android:exported="false" /> <!-- Activity to set a new or modify existing alarm -->
         <activity
             android:name=".features.splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"

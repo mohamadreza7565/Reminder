@@ -13,6 +13,7 @@ import com.rymo.felfel.data.preferences.Setting
 import com.rymo.felfel.databinding.ActivityMainBinding
 import com.rymo.felfel.features.alarm.alarmList.AlarmsListActivity
 import com.rymo.felfel.features.contacts.ContactsActivity
+import com.rymo.felfel.features.reports.ReportsActivity
 import com.rymo.felfel.receiver.sms.SMSReceiverImpl
 
 
@@ -45,9 +46,11 @@ class MainActivity : Base.BaseActivity() {
 
     private fun initClick() {
 
-        binding.llContact.setOnClickListener { startActivity(Intent(this, ContactsActivity::class.java)) }
+        binding.llContact.setOnClickListener { ContactsActivity.start(this) }
 
-        binding.llAlarm.setOnClickListener { startActivity(Intent(this, AlarmsListActivity::class.java)) }
+        binding.llAlarm.setOnClickListener { AlarmsListActivity.start(this) }
+
+        binding.llRepost.setOnClickListener { ReportsActivity.start(this) }
 
     }
 

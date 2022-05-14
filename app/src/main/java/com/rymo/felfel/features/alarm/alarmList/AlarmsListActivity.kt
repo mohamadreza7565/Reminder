@@ -19,6 +19,7 @@ package com.rymo.felfel.features.alarm.alarmList
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
@@ -55,8 +56,11 @@ import com.rymo.felfel.model.DaysOfWeek
 import com.rymo.felfel.util.Optional
 import com.rymo.felfel.util.formatToast
 import com.google.android.material.snackbar.Snackbar
+import com.rymo.felfel.common.Base
+import com.rymo.felfel.common.startActivity
 import com.rymo.felfel.features.alarm.*
 import com.rymo.felfel.features.alarm.alarmDetails.AlarmDetailsFragment
+import com.rymo.felfel.features.reports.ReportsActivity
 import io.reactivex.annotations.NonNull
 import io.reactivex.disposables.Disposables
 import io.reactivex.functions.Consumer
@@ -68,7 +72,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 /** This activity displays a list of alarms and optionally a details fragment. */
-class AlarmsListActivity : AppCompatActivity() {
+class AlarmsListActivity : Base.BaseActivity() {
   private lateinit var mActionBarHandler: ActionBarHandler
 
   private val logger: Logger by globalLogger("AlarmsListActivity")
@@ -81,6 +85,13 @@ class AlarmsListActivity : AppCompatActivity() {
   private val uiStore: UiStore by globalInject()
 
   companion object {
+
+      fun start(mContext: Context) {
+          Intent(mContext, AlarmsListActivity::class.java).also {
+              startActivity(mContext, it)
+          }
+      }
+
     val uiStoreModule: Module = module { single<UiStore> { createStore(EditedAlarm(), get()) } }
 
     private fun createStore(edited: EditedAlarm, alarms: IAlarmsManager): UiStore {

@@ -4,20 +4,8 @@ object Constants {
 
 
     /**
-     * Base urls
-     */
-    const val BASE_URL = "http://richato.zavoshsoftware.com/"
-    const val BASE_IMAGE_URL = "http://richato.com"
-    const val BASE_USER_IMAGE_URL = "http://richato.zavoshsoftware.com"
-    const val BASE_API_URL = "http://79.175.155.143/sanjabapi/api/"
-
-    /**
      * Req code
      */
-    const val SELECT_COUNTRY_REQ_CODE = 1001
-    const val SELECT_IMAGE_FROM_GALLERY = 1002
-    const val CHANGE_ACTIVITY = 1003
-    const val CROP_IMAGE = 1004
     const val REQ_ALL_PERMISSIONS = 1005
     const val REQ_SMS_PERMISSIONS = 1006
     const val REQ_STORAGE_PERMISSIONS = 1007
@@ -61,23 +49,14 @@ object Constants {
     const val KEY_EXTRA_ID = "KEY_EXTRA_ID"
     const val KEY_EXTRA_DATA = "KEY_EXTRA_DATA"
 
-    /**
-     * GENDER
-     */
-    const val BOY = 1
-    const val GIRL = 2
 
     /**
-     * Banner types
+     * Report fragments
      */
-    const val BANNER_VIDEO_TYPE = "Video"
-    const val BANNER_CATEGORY_TYPE = "Category"
 
-    /**
-     * Event bus messages
-     */
-    const val OPEN_DEEP_LINK = "OPEN_DEEP_LINK"
-    const val LOGIN_SUCCESS = "LOGIN_SUCCESS"
-    const val UPDATE_PROFILE = "UPDATE_PROFILE"
+    const val SEND_MESSAGES_REPORT = 0
+    const val GET_MESSAGES_REPORT = 1
+    const val NOT_GET_MESSAGES_USERS_REPORT = 2
+
 
 }

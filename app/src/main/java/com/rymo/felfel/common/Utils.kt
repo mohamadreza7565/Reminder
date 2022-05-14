@@ -257,7 +257,7 @@ fun getFormattedDate(timeInString: String, format: String): Date {
     return sdf.parse(timeInString)
 }
 
-fun startActivity(mActivity: Activity, intent: Intent) {
+fun startActivity(mActivity: Context, intent: Intent) {
     mActivity.startActivity(intent)
 }
 

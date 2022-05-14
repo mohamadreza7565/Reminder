@@ -26,4 +26,7 @@
     <string name="selectContactOne">حداقل یک مخاطب را انتخاب کنید</string>
     <string name="deleteFromAlarmContactWhenContactDeleted">با حذف مخاطب از تمام پیام های خودکار نیز حذف می شود</string>
     <string name="doYouWantDeleteContact">با اطمینان مخاطب را حذف می کنید ؟</string>
+    <string name="messagesSend">پیام های ارسال شده</string>
+    <string name="messagesGet">پیام های دریافت شده</string>
+    <string name="messagesNotSendUser">مشتریانی که پیام نداده اند</string>
 </resources>
