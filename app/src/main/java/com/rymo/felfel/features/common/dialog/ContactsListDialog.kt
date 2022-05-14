@@ -1,13 +1,17 @@
 package com.rymo.felfel.features.common.dialog
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rymo.felfel.R
 import com.rymo.felfel.common.BaseBottomSheetDialog
+import com.rymo.felfel.common.gone
+import com.rymo.felfel.common.visible
 import com.rymo.felfel.features.common.adapter.ContactListAdapter
 import com.rymo.felfel.model.Contact
 import kotlinx.android.synthetic.main.contacts_list_dialog.*
+import kotlinx.android.synthetic.main.view_error.*
 
 class ContactsListDialog(
     context: Context,
@@ -43,8 +47,15 @@ class ContactsListDialog(
 
         (contactsRv.adapter as ContactListAdapter).contacts = contacts
 
+        if (contacts.isNullOrEmpty()) {
+            errorIv.setImageResource(R.drawable.ic_empty_folder)
+            errorTv.text = getString(R.string.contactIsEmpty)
+            retryBtn.gone()
+            errorView.visible()
+        }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun contactAdapter() = ContactListAdapter { position, longClick, contact ->
         contacts[position].selected = !contacts[position].selected
         (contactsRv.adapter as ContactListAdapter).notifyDataSetChanged()

@@ -48,6 +48,7 @@ import com.rymo.felfel.logger.Logger
 import com.rymo.felfel.lollipop
 import com.rymo.felfel.model.AlarmValue
 import com.rymo.felfel.model.Alarmtone
+import com.rymo.felfel.model.Contact
 import com.rymo.felfel.util.Optional
 import com.rymo.felfel.util.modify
 import com.rymo.felfel.view.BaseToolbar
@@ -58,6 +59,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.util.Calendar
 
 /** Details activity allowing for fine-grained alarm modification */
