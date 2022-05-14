@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <dimen name="button_footer_height">64dip</dimen>
+
+    <dimen name="cornerRadius">8dp</dimen>
+    <dimen name="elevation">2dp</dimen>
+    <dimen name="iconToolbarMargin">16dp</dimen>
+    <dimen name="dividerWidth">0.5dp</dimen>
+    <dimen name="minHeightButton">45dp</dimen>
+    <dimen name="loginRadius">50dp</dimen>
+    <dimen name="inputPaddingEndAndStart">20dp</dimen>
+
+
+    <!--Corner sizes-->
+    <dimen name="corner_big_box">@dimen/_14sdp</dimen> <!--20px-->
+    <dimen name="corner_medium_box">@dimen/_11sdp</dimen> <!--16px-->
+    <dimen name="corner_small_box">@dimen/_7sdp</dimen> <!--10px-->
+    <dimen name="corner_extra_small_box">@dimen/_5sdp</dimen> <!--6px-->
+    <dimen name="corner_normal_cta">@dimen/_11sdp</dimen> <!--16px-->
+    <dimen name="corner_small_cta">@dimen/_5sdp</dimen> <!--8px-->
+    <dimen name="corner_tab">@dimen/corner_small_box</dimen> <!--10px-->
+    <dimen name="corner_input">@dimen/corner_small_box</dimen> <!--10px-->
+    <dimen name="corner_bottom_sheet">@dimen/_25sdp</dimen> <!--50px-->
+    <dimen name="corner_support_chat">@dimen/_17sdp</dimen> <!--28px-->
+    <dimen name="corner_add_announce_options">@dimen/_24sdp</dimen> <!--38px-->
+
+    <!--Margins-->
+    <dimen name="standard_margin_big">@dimen/_35sdp</dimen>
+    <dimen name="standard_margin_medium">@dimen/_15sdp</dimen>
+    <dimen name="standard_margin_small">@dimen/_10sdp</dimen>
+
+</resources>

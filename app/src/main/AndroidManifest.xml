@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.rymo.felfel">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        android:maxSdkVersion="19" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- https://github.com/ACRA/acra/issues/787 -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+
+            <data android:mimeType="message/rfc822" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+            <data android:mimeType="message/rfc822" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".configuration.AlarmApplication"
+        android:allowBackup="true"
+        android:fullBackupOnly="true"
+        android:icon="@mipmap/ic_app_icon"
+        android:installLocation="internalOnly"
+        android:label="@string/simple_alarm_clock"
+        android:supportsRtl="true"
+        android:theme="@style/AlarmAlertFullScreenLightTheme"
+        tools:targetApi="lollipop">
+
+        <activity
+            android:name=".features.contacts.ContactsActivity"
+            android:exported="false" />
+        <!-- Activity to set a new or modify existing alarm -->
+        <activity
+            android:name=".features.splash.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:exported="true"
+            android:label="@string/alarm_list_title"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".features.alarm.alarmList.AlarmsListActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:label="@string/alarm_list_title" />
+        <activity
+            android:name=".features.permissions.GeneratePermissionsActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:label="@string/generatePermissions" />
+        <activity
+            android:name=".features.main.MainActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:label="@string/main" /> <!-- Application Settings -->
+        <activity
+            android:name=".features.alarm.SettingsActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:label="@string/settings" />
+        <activity
+            android:name=".features.alarm.HandleSetAlarm"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:permission="com.android.alarm.permission.SET_ALARM"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+ This activity is basically the same as AlarmAlert
+             but full-screen so that it can turn the display on.
+        -->
+        <activity
+            android:name=".alert.AlarmAlertFullScreen"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="" /> <!-- Transparent activity with TimPickerFragment -->
+        <activity
+            android:name=".features.alarm.TransparentActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" /> <!-- KlaxonPresenter plays sound -->
+        <service
+            android:name=".background.AlertServiceWrapper"
+            android:description="@string/alarm_klaxon_service_desc"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receiver.sms.SMSReceiverImpl"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.sms.SMSReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver> <!-- Model -->
+        <receiver
+            android:name=".model.AlarmsReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.ACTION_FIRED" />
+                <action android:name="${applicationId}.ACTION_SNOOZED_FIRED" />
+                <action android:name="${applicationId}.ACTION_SOUND_EXPIRED" />
+                <action android:name="${applicationId}.ACTION_CANCEL_NOTIFICATION" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver> <!-- Persistence -->
+        <provider
+            android:name=".persistance.AlarmProvider"
+            android:authorities="${applicationId}.model"
+            android:exported="false" />
+    </application>
+
+</manifest>

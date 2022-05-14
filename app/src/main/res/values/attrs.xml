@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="com.rymo.felfel.view.VolumePreference">
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+        <attr name="cancelButton" format="boolean" />
+    </declare-styleable>
+
+    <attr name="alertFullScreenBackground" format="reference" />
+    <attr name="alarmDetailsButtonStyle" format="reference" />
+    <attr name="timePickerDeleteButtonStyle" format="reference" />
+    <attr name="infoBarColor" format="color" />
+    <attr name="listFabColor" format="color" />
+    <attr name="listRowDisabledColor" format="color" />
+    <attr name="drawerClosedBackgroundColor" format="color" />
+    <attr name="drawerBackgroundColor" format="color" />
+
+    <attr name="dividerColor" format="color"/>
+    <attr name="rippleOnBackground" format="color"/>
+    <attr name="bottomNavColor" format="color"/>
+    <attr name="deActiveRatingBarBgBlackColor" format="color"/>
+    <attr name="activeRatingBarBgBlackColor" format="color"/>
+    <attr name="hintColorBlackEditText" format="color"/>
+
+    <declare-styleable name="BaseToolbar">
+        <attr name="bt_title" format="string"/>
+        <attr name="bt_showBack"  format="boolean"/>
+    </declare-styleable>
+
+</resources>

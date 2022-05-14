@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="contacts">مخاطبین</string>
+    <string name="addNewContact">افزودن مخاطب جدید</string>
+    <string name="restaurantNameTitle">نام رستوران یا فست فود :</string>
+    <string name="nameAndFamily">نام و نام خانوادگی</string>
+    <string name="restaurantName">نام رستوران یا فست فود</string>
+    <string name="phone">تلفن</string>
+    <string name="cancel">انصراف</string>
+    <string name="submit">تایید</string>
+    <string name="contactIsEmpty">مخاطبی ثبت نشده است</string>
+    <string name="message">متن پیام ارسالی</string>
+</resources>
