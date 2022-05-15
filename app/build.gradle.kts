@@ -171,7 +171,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.4.2")
     implementation("androidx.room:room-ktx:2.4.2")
     kapt("androidx.room:room-compiler:2.4.2")
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.code.gson:gson:2.9.0")
     implementation("com.jakewharton.timber:timber:4.7.1")
     implementation("com.android.support:multidex:1.0.3")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
