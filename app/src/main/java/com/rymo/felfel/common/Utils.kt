@@ -149,8 +149,8 @@ fun <T> Single<T>.asyncNetworkRequest(): Single<T> {
         .observeOn(AndroidSchedulers.mainThread())
 }
 
-fun toast(message: String) {
-    Toast.makeText(AlarmApplication.instance!!, message, Toast.LENGTH_SHORT).show()
+fun toast(message: String?) {
+    Toast.makeText(AlarmApplication.instance!!, message ?: "NULL", Toast.LENGTH_SHORT).show()
 }
 
 fun getHeightScreenSize(mContext: Context?): Int {

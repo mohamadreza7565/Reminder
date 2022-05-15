@@ -38,6 +38,8 @@ import com.rymo.felfel.features.alarm.alarmDetails.AlarmDetailsViewModel
 import com.rymo.felfel.features.alarm.alarmList.AlarmListViewModel
 import com.rymo.felfel.features.contacts.ContactsViewModel
 import com.rymo.felfel.features.permissions.GeneratePermissionViewModel
+import com.rymo.felfel.repo.ExcelRepoImpl
+import com.rymo.felfel.repo.ExcelRepository
 import com.rymo.felfel.stores.SharedRxDataStoreFactory
 import com.rymo.felfel.util.Optional
 import com.rymo.felfel.wakelock.WakeLockManager
@@ -140,10 +142,14 @@ fun startKoin(context: Context): Koin {
 
         single { createDataBaseInstance(context) }
 
+        factory {
+            ExcelRepoImpl()
+        }
+
         viewModel { GeneratePermissionViewModel() }
         viewModel { AlarmListViewModel(get()) }
         viewModel { AlarmDetailsViewModel(get()) }
-        viewModel { ContactsViewModel(get()) }
+        viewModel { ContactsViewModel(get(), get()) }
 
     }
 

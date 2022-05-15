@@ -1,10 +1,9 @@
-
 plugins {
     id("com.android.application")
-    id ("kotlin-android-extensions")
+    id("kotlin-android-extensions")
     kotlin("android")
     jacoco
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
 }
 
 jacoco { toolVersion = "0.8.8" }
@@ -86,8 +85,8 @@ android {
 
     compileSdk = 32
     defaultConfig {
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
         applicationId = "com.rymo.felfel"
         minSdk = 21
         targetSdk = 32
@@ -134,7 +133,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     testOptions { unitTests.isReturnDefaultValues = true }
+
 }
+
+
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
@@ -153,7 +155,7 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("org.koin:koin-core:2.2.2")
-    implementation ("org.koin:koin-androidx-viewmodel:2.2.2")
+    implementation("org.koin:koin-androidx-viewmodel:2.2.2")
     implementation("androidx.fragment:fragment:1.4.1")
     implementation("androidx.preference:preference:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
@@ -166,18 +168,22 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
     implementation("androidx.navigation:navigation-runtime-ktx:2.4.2")
-    implementation ("androidx.room:room-runtime:2.4.2")
-    implementation ("androidx.room:room-ktx:2.4.2")
-    kapt ("androidx.room:room-compiler:2.4.2")
-    implementation ("com.google.code.gson:gson:2.8.9")
-    implementation ("com.jakewharton.timber:timber:4.7.1")
-    implementation ("com.android.support:multidex:1.0.3")
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.facebook.fresco:fresco:2.6.0")
-    implementation ("org.greenrobot:eventbus:3.3.1")
-    implementation ("com.tbuonomo:dotsindicator:4.2")
-    implementation ("com.intuit.sdp:sdp-android:1.0.6")
-    implementation ("com.intuit.ssp:ssp-android:1.0.6")
+    implementation("androidx.room:room-runtime:2.4.2")
+    implementation("androidx.room:room-ktx:2.4.2")
+    kapt("androidx.room:room-compiler:2.4.2")
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.android.support:multidex:1.0.3")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("com.facebook.fresco:fresco:2.6.0")
+    implementation("org.greenrobot:eventbus:3.3.1")
+    implementation("com.tbuonomo:dotsindicator:4.2")
+    implementation("com.intuit.sdp:sdp-android:1.0.6")
+    implementation("com.intuit.ssp:ssp-android:1.0.6")
+    implementation("cn.chenhuanming:octopus:1.1.4") {
+        exclude("org.apache.xmlbeans")
+    }
+    implementation("com.ajts.androidmads.SQLite2Excel:library:1.0.4")
 }
 
 dependencies {
