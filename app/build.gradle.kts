@@ -177,7 +177,7 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.facebook.fresco:fresco:2.6.0")
     implementation("org.greenrobot:eventbus:3.3.1")
-    implementation("com.tbuonomo:dotsindicator:4.2")
+    implementation("com.tbuonomo:dotsindicator:4.3")
     implementation("com.intuit.sdp:sdp-android:1.0.6")
     implementation("com.intuit.ssp:ssp-android:1.0.6")
     implementation("cn.chenhuanming:octopus:1.1.4") {
