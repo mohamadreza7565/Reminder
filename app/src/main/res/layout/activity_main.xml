@@ -42,14 +42,7 @@
 
                        <ImageView
                            android:layout_width="32dp"
-                           android:layout_height="32dp"
-                           android:layout_gravity="start|center_vertical"
-                           android:layout_marginStart="16dp"
-                           android:src="@drawable/ic_help"
-                           app:tint="?colorOnPrimary" />
-
-                       <ImageView
-                           android:layout_width="32dp"
+                           android:id="@+id/aboutMeBtn"
                            android:layout_height="32dp"
                            android:layout_gravity="end|center_vertical"
                            android:layout_marginEnd="16dp"
@@ -164,7 +157,7 @@
                        <ImageView
                            style="@style/home_box_image"
                            android:scaleType="centerCrop"
-                           android:src="@drawable/ic_contacts" />
+                           android:src="@drawable/ic_contact" />
 
                        <TextView
                            style="@style/home_box_text"
@@ -174,7 +167,7 @@
 
 
                    <LinearLayout
-                       android:id="@+id/llSetting"
+                       android:id="@+id/llGroup"
                        style="@style/home_box_layout"
                        android:layout_width="0dp"
                        android:layout_height="0dp"
@@ -191,11 +184,11 @@
                        <ImageView
                            style="@style/home_box_image"
                            android:scaleType="centerCrop"
-                           android:src="@drawable/ic_setting" />
+                           android:src="@drawable/ic_group" />
 
                        <TextView
                            style="@style/home_box_text"
-                           android:text="@string/settings" />
+                           android:text="@string/groups" />
 
                    </LinearLayout>
 

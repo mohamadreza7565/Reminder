@@ -85,10 +85,10 @@ android {
 
     compileSdk = 32
     defaultConfig {
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
         applicationId = "com.rymo.felfel"
-        minSdk = 21
+        minSdk = 22
         targetSdk = 32
         testApplicationId = "com.rymo.felfel.test"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -134,6 +134,10 @@ android {
     }
     testOptions { unitTests.isReturnDefaultValues = true }
 
+
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 

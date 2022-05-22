@@ -38,6 +38,7 @@ import com.rymo.felfel.features.alarm.alarmDetails.AlarmDetailsViewModel
 import com.rymo.felfel.features.alarm.alarmList.AlarmListViewModel
 import com.rymo.felfel.features.contacts.ContactsViewModel
 import com.rymo.felfel.features.permissions.GeneratePermissionViewModel
+import com.rymo.felfel.features.reports.ReportsViewModel
 import com.rymo.felfel.repo.ExcelRepoImpl
 import com.rymo.felfel.repo.ExcelRepository
 import com.rymo.felfel.stores.SharedRxDataStoreFactory
@@ -150,6 +151,7 @@ fun startKoin(context: Context): Koin {
         viewModel { AlarmListViewModel(get()) }
         viewModel { AlarmDetailsViewModel(get()) }
         viewModel { ContactsViewModel(get(), get()) }
+        viewModel { ReportsViewModel(get(), get()) }
 
     }
 

@@ -18,52 +18,58 @@ package com.rymo.felfel.model
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import com.rymo.felfel.configuration.globalInject
 import com.rymo.felfel.configuration.globalLogger
 import com.rymo.felfel.interfaces.PresentationToModelIntents
 import com.rymo.felfel.logger.Logger
+import com.rymo.felfel.receiver.sms.SMSReceiverImpl
 
 class AlarmsReceiver : BroadcastReceiver() {
-  private val alarms: Alarms by globalInject()
-  private val log: Logger by globalLogger("AlarmsReceiver")
+    private val alarms: Alarms by globalInject()
+    private val log: Logger by globalLogger("AlarmsReceiver")
 
-  override fun onReceive(context: Context, intent: Intent) {
-    when (intent.action) {
-      AlarmsScheduler.ACTION_FIRED -> {
-        val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
-        val calendarType =
-            intent.extras?.getString(AlarmsScheduler.EXTRA_TYPE)?.let { CalendarType.valueOf(it) }
-        log.debug { "Fired $id $calendarType" }
-        alarms.getAlarm(id)?.let { alarms.onAlarmFired(it, calendarType) }
-      }
-      AlarmsScheduler.ACTION_INEXACT_FIRED -> {
-        val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
-        log.debug { "Fired  ACTION_INEXACT_FIRED $id" }
-        alarms.getAlarm(id)?.onInexactAlarmFired()
-      }
-      Intent.ACTION_BOOT_COMPLETED,
-      Intent.ACTION_TIMEZONE_CHANGED,
-      Intent.ACTION_LOCALE_CHANGED,
-      Intent.ACTION_MY_PACKAGE_REPLACED -> {
-        log.debug { "Refreshing alarms because of ${intent.action}" }
-        alarms.refresh()
-      }
-      Intent.ACTION_TIME_CHANGED -> alarms.onTimeSet()
-      PresentationToModelIntents.ACTION_REQUEST_SNOOZE -> {
-        val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
-        log.debug { "Snooze $id" }
-        alarms.getAlarm(id)?.snooze()
-      }
-      PresentationToModelIntents.ACTION_REQUEST_DISMISS -> {
-        val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
-        log.debug { "Dismiss $id" }
-        alarms.getAlarm(id)?.dismiss()
-      }
-      PresentationToModelIntents.ACTION_REQUEST_SKIP -> {
-        val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
-        log.debug { "RequestSkip $id" }
-        alarms.getAlarm(id)?.requestSkip()
-      }
+    override fun onReceive(context: Context, intent: Intent) {
+        when (intent.action) {
+            AlarmsScheduler.ACTION_FIRED -> {
+                val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
+                val calendarType =
+                    intent.extras?.getString(AlarmsScheduler.EXTRA_TYPE)?.let { CalendarType.valueOf(it) }
+                log.debug { "Fired $id $calendarType" }
+                alarms.getAlarm(id)?.let { alarms.onAlarmFired(it, calendarType) }
+            }
+            AlarmsScheduler.ACTION_INEXACT_FIRED -> {
+                val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
+                log.debug { "Fired  ACTION_INEXACT_FIRED $id" }
+                alarms.getAlarm(id)?.onInexactAlarmFired()
+            }
+            Intent.ACTION_BOOT_COMPLETED,
+            Intent.ACTION_TIMEZONE_CHANGED,
+            Intent.ACTION_LOCALE_CHANGED,
+            Intent.ACTION_MY_PACKAGE_REPLACED -> {
+                log.debug { "Refreshing alarms because of ${intent.action}" }
+                val smsListener = SMSReceiverImpl()
+                val intentFilter = IntentFilter()
+                intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED")
+                context.registerReceiver(smsListener, intentFilter)
+                alarms.refresh()
+            }
+            Intent.ACTION_TIME_CHANGED -> alarms.onTimeSet()
+            PresentationToModelIntents.ACTION_REQUEST_SNOOZE -> {
+                val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
+                log.debug { "Snooze $id" }
+                alarms.getAlarm(id)?.snooze()
+            }
+            PresentationToModelIntents.ACTION_REQUEST_DISMISS -> {
+                val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
+                log.debug { "Dismiss $id" }
+                alarms.getAlarm(id)?.dismiss()
+            }
+            PresentationToModelIntents.ACTION_REQUEST_SKIP -> {
+                val id = intent.getIntExtra(AlarmsScheduler.EXTRA_ID, -1)
+                log.debug { "RequestSkip $id" }
+                alarms.getAlarm(id)?.requestSkip()
+            }
+        }
     }
-  }
 }

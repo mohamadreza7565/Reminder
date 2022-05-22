@@ -9,13 +9,11 @@ import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
 import android.util.DisplayMetrics
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -28,19 +26,14 @@ import androidx.dynamicanimation.animation.SpringForce
 import com.google.android.material.snackbar.Snackbar
 import com.rymo.felfel.R
 import com.rymo.felfel.configuration.AlarmApplication
-import com.rymo.felfel.configuration.Store
-import com.rymo.felfel.util.formatToast
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+import java.util.concurrent.TimeUnit
 
 
 fun convertDpToPixel(dp: Float, context: Context?): Float {
@@ -275,3 +268,41 @@ fun showSnackBar(rootView: View?, message: String, duration: Int = Snackbar.LENG
 
     }
 }
+
+@SuppressLint("TimberArgCount")
+fun Long.getTimeFromLong(): Triple<String, String, String> {
+
+    val hours = java.lang.String.format(
+        Locale.ENGLISH, "%02d",
+        TimeUnit.MILLISECONDS.toHours(this)
+    )
+    val minutes = java.lang.String.format(
+        Locale.ENGLISH, "%02d",
+        TimeUnit.MILLISECONDS.toMinutes(this) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(this))
+    )
+    val seconds = java.lang.String.format(
+        Locale.ENGLISH, "%02d",
+        TimeUnit.MILLISECONDS.toSeconds(this) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this))
+    )
+
+    Timber.e("Times -> $hours : $minutes : $seconds")
+    return Triple(hours, minutes, seconds)
+
+
+}
+
+fun String.convertArabic(): String {
+    val chArr = this.toCharArray()
+    val sb = StringBuilder()
+    for (ch in chArr) {
+        if (Character.isDigit(ch)) {
+            sb.append(Character.getNumericValue(ch))
+        } else if (ch == '٫') {
+            sb.append(".")
+        } else {
+            sb.append(ch)
+        }
+    }
+    return sb.toString()
+}
+

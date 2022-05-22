@@ -40,9 +40,9 @@
     </string-array>
     <string name="day" msgid="7984755014526510295">"1 روز"</string>
     <string name="days" msgid="2070509222727852210">"<xliff:g id="DAYS">%s</xliff:g> روز"</string>
-    <string name="hour" msgid="2546819039651509323">"1 ساعت"</string>
+    <string name="oneHour" msgid="2546819039651509323">"1 ساعت"</string>
     <string name="hours" msgid="2071487018566991613">"<xliff:g id="HOURS">%s</xliff:g> ساعت"</string>
-    <string name="minute" msgid="2486157997434653710">"1 دقیقه"</string>
+    <string name="oneMinute" msgid="2486157997434653710">"1 دقیقه"</string>
     <string name="minutes" msgid="6115838729146292526">"<xliff:g id="MINUTES">%s</xliff:g> دقیقه"</string>
     <string name="every_day" msgid="4100909974923444602">"هر روز"</string>
     <string name="never" msgid="54104287800571769">"هرگز"</string>

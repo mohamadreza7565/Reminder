@@ -34,13 +34,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.rymo.felfel.R
 import com.rymo.felfel.checkPermissions
+import com.rymo.felfel.common.SimUtil
+import com.rymo.felfel.common.getTimeFromLong
 import com.rymo.felfel.common.showSnackBar
+import com.rymo.felfel.common.toast
 import com.rymo.felfel.configuration.Layout
 import com.rymo.felfel.configuration.Prefs
 import com.rymo.felfel.configuration.globalInject
 import com.rymo.felfel.configuration.globalLogger
 import com.rymo.felfel.features.alarm.*
-import com.rymo.felfel.features.alarm.alarmList.AlarmListViewModel
+import com.rymo.felfel.features.alarm.alarmDetails.dialog.SelectSimCardDialog
+import com.rymo.felfel.features.alarm.alarmDetails.dialog.SetDelayDialog
 import com.rymo.felfel.features.alarm.alarmList.AlarmsListActivity
 import com.rymo.felfel.features.common.dialog.ContactsListDialog
 import com.rymo.felfel.interfaces.IAlarmsManager
@@ -48,7 +52,6 @@ import com.rymo.felfel.logger.Logger
 import com.rymo.felfel.lollipop
 import com.rymo.felfel.model.AlarmValue
 import com.rymo.felfel.model.Alarmtone
-import com.rymo.felfel.model.Contact
 import com.rymo.felfel.util.Optional
 import com.rymo.felfel.util.modify
 import com.rymo.felfel.view.BaseToolbar
@@ -131,11 +134,14 @@ class AlarmDetailsFragment : Fragment() {
         onCreateBottomView()
         onCreateLabelView()
         onCreateContactView()
+        onCreateDelayView()
+        onCreateSimCardView()
 
         store.transitioningToNewAlarmDetails().takeFirst { isNewAlarm ->
             if (isNewAlarm) {
                 showTimePicker()
                 mViewModel.getContacts()
+
             } else {
                 mViewModel.getContacts(alarmId.toLong())
                 val size = mViewModel.getSizeAlarmContact()
@@ -207,6 +213,132 @@ class AlarmDetailsFragment : Fragment() {
             })
     }
 
+
+    private fun onCreateDelayView() {
+
+        val detailsDelayRow: LinearLayout = fragmentView.findViewById(R.id.details_delay_row)
+        val detailsDelay: TextView = fragmentView.findViewById(R.id.details_delay)
+        var stringTime = ""
+
+        observeEditor { value ->
+
+            Timber.e("Delay : selected from observer -> ${value.delay}")
+            val time = value.delay.getTimeFromLong()
+            mViewModel.delaySelected = value.delay
+            // Check delay is Second  or is minute
+            if (time.third == "00") {
+                // is only minutes OR minutes and hour
+                if (time.first == "00") {
+                    if (time.second == "00") {
+                        // not set any time
+                        stringTime = getString(R.string.notInputDelay)
+                    } else {
+                        // is only minutes
+                        stringTime = "${time.second} ${getString(R.string.minute)} "
+                    }
+                } else {
+                    if (time.second == "00") {
+                        // if only hour
+                        stringTime = "${time.first} ${getString(R.string.hour)} "
+                    } else {
+                        // is minutes and hour
+                        stringTime = "${time.first} ${getString(R.string.hour)} ${getString(R.string.andText)} ${time.second} ${
+                            getString(
+                                R.string.minute
+                            )
+                        } "
+                    }
+                }
+            } else {
+                // is seconds or minutes or hour or all of them
+                if (time.first == "00") {
+                    if (time.second == "00") {
+                        // not set any time
+                        stringTime = "${time.third} ${getString(R.string.second)}"
+                    } else {
+                        // is seconds and minutes
+                        stringTime = "${time.second} ${getString(R.string.minute)} ${getString(R.string.andText)} ${time.third} ${
+                            getString(
+                                R.string.second
+                            )
+                        } "
+                    }
+                } else {
+                    if (time.second == "00") {
+                        // is seconds and hours
+                        stringTime = "${time.first} ${getString(R.string.hour)} ${getString(R.string.andText)} ${time.third} ${
+                            getString(
+                                R.string.second
+                            )
+                        } "
+                    } else {
+                        // is seconds and minutes and hours
+                        stringTime = "${time.first} ${getString(R.string.hour)} ${getString(R.string.andText)} ${time.second} ${
+                            getString(
+                                R.string.minute
+                            )
+                        } ${getString(R.string.andText)} ${time.third} ${
+                            getString(
+                                R.string.second
+                            )
+                        } "
+                    }
+                }
+            }
+
+            // Check delay typed in textView
+            // If not typed setText delay in textView
+            if (value.delay != 0L && detailsDelay.text.toString() != stringTime) {
+                detailsDelay.text = stringTime
+            }
+        }
+
+        // set on click for delay layout and show dialog
+        // modify long in editor
+
+        detailsDelayRow.setOnClickListener {
+            SetDelayDialog(requireContext(), mViewModel.delaySelected) { _delay ->
+                Timber.e("Delay : selected -> $_delay")
+                editor.takeFirst {
+                    modify("Delay") { prev -> prev.copy(delay = _delay, isEnabled = true) }
+                }
+            }.show(childFragmentManager, "SET_DELAY")
+        }
+
+    }
+
+    private fun onCreateSimCardView() {
+
+        val detailsSimRow: LinearLayout = fragmentView.findViewById(R.id.details_sim_row)
+        val detailsSim: TextView = fragmentView.findViewById(R.id.details_sim)
+        val sims = SimUtil.getSimCount()
+
+        observeEditor { value ->
+            val sim = sims.find { value.simId == it.subscriptionId }
+            if (sim != null) {
+                detailsSim.text = sim.carrierName
+                mViewModel.simCardSelected = sim.subscriptionId
+            } else {
+                val defaultSim = sims.first()
+                detailsSim.text = defaultSim.carrierName
+                mViewModel.simCardSelected = defaultSim.subscriptionId
+            }
+        }
+
+        // set on click for delay layout and show dialog
+        // modify long in editor
+
+        detailsSimRow.setOnClickListener {
+            SelectSimCardDialog(requireContext(), mViewModel.simCardSelected) { _simCard ->
+                editor.takeFirst {
+                    mViewModel.simCardSelected = _simCard.subscriptionId
+                    modify("SimId") { prev -> prev.copy(simId = _simCard.subscriptionId, isEnabled = true) }
+                }
+            }.show(childFragmentManager, "SELECT_SIM_CARD")
+        }
+
+    }
+
     private fun onCreateRepeatView() {
 
         fragmentView.findViewById<LinearLayout>(R.id.details_repeat_row).setOnClickListener {
@@ -228,8 +360,9 @@ class AlarmDetailsFragment : Fragment() {
     private fun onCreateContactView() {
 
         fragmentView.findViewById<LinearLayout>(R.id.details_contacts_row).setOnClickListener {
-            ContactsListDialog(requireContext(), mViewModel.contacts) {
-                mViewModel.contacts = it
+            ContactsListDialog(requireContext(), mViewModel.contacts, mViewModel.groups) { _contacts, _groups ->
+                mViewModel.contacts = _contacts
+                mViewModel.groups = _groups
                 val size = mViewModel.getSizeAlarmContact()
                 if (size == 0) {
                     detailsContacts.text = getString(R.string.notSelectedContact)

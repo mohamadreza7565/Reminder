@@ -12,6 +12,8 @@ data class Contact(
     var nameAndFamily: String = " ",
     var companyName: String = " ",
     @Ignore
+    val replayMessage: String = "",
+    @Ignore
     var selected: Boolean = false,
 )
 

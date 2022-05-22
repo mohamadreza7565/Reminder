@@ -22,20 +22,23 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.telephony.SmsManager
+import android.os.Handler
 import androidx.core.app.NotificationCompat
-import com.rymo.felfel.CHANNEL_ID_HIGH_PRIO
-import com.rymo.felfel.R
+import com.rymo.felfel.*
 import com.rymo.felfel.alert.AlarmAlertFullScreen
-import com.rymo.felfel.common.convertListToMutableList
+import com.rymo.felfel.common.PersianCalendar
+import com.rymo.felfel.common.SimUtil
+import com.rymo.felfel.common.convertArabic
+import com.rymo.felfel.common.toast
 import com.rymo.felfel.data.preferences.Setting
 import com.rymo.felfel.database.createDataBaseInstance
 import com.rymo.felfel.interfaces.Intents
 import com.rymo.felfel.interfaces.PresentationToModelIntents
-import com.rymo.felfel.isOreo
 import com.rymo.felfel.logger.Logger
-import com.rymo.felfel.notificationBuilder
-import com.rymo.felfel.pendingIntentUpdateCurrentFlag
+import com.rymo.felfel.model.ExportSmsMessage
+import com.rymo.felfel.model.SmsMessageModel
+import com.rymo.felfel.model.SmsMessageSendTime
+import com.rymo.felfel.repo.ExcelRepoImpl
 import timber.log.Timber
 import java.util.*
 
@@ -53,18 +56,70 @@ class NotificationsPlugin(
         // alert dialog. No need to check for fullscreen since this will always
         // be launched from a user action.
 
+
+        val pCal = PersianCalendar.getInstance()
+        val smsTime = pCal.time.convertArabic()
+        val smsDate = pCal.iranianDate.convertArabic()
+
         val appDatabase = createDataBaseInstance(mContext)
         val contactDao = appDatabase.contactDao()
+        val smsMessageDao = appDatabase.smsMessageDao()
         val alarmContacts = contactDao.getContactAlarm(alarm.id.toLong())
+
+        smsMessageDao.deleteExportMessage()
 
         alarmContacts.forEach {
             val contact = contactDao.getContact(it.contactId)
-            if (contact != null) {
-                val messageToSend = alarm.label
-                val number = contact.phone
-                SmsManager.getDefault().sendTextMessage(number, null, messageToSend, null, null)
+            contact?.let {
+                smsMessageDao.insertExportMessage(
+                    ExportSmsMessage(
+                        contactName = it.nameAndFamily,
+                        phoneNumber = it.phone,
+                        date = smsDate,
+                        time = smsTime,
+                        textSms = alarm.label,
+                        replayText = "",
+                        companyName = contact.companyName
+                    )
+                )
             }
         }
+
+        Timber.e("Export data -> ${smsMessageDao.getAllExportMessages().size}")
+
+        export(date = smsDate, time = smsTime)
+
+
+        smsMessageDao.insertSmsMessageTime(SmsMessageSendTime(date = smsDate, time = smsTime, textSms = alarm.label))
+        Timber.e("Delay -> ${alarm.delay}")
+        Thread {
+            try {
+                alarmContacts.forEach {
+                    val contact = contactDao.getContact(it.contactId)
+                    if (contact != null) {
+                        val messageToSend = alarm.label
+                        val number = contact.phone
+                        SimUtil.sendSMS(alarm.simId, number, messageToSend)
+                        Timber.e("Send To -> ${contact.phone}")
+                        val smsMessageModel = SmsMessageModel(
+                            contactName = contact.nameAndFamily,
+                            phoneNumber = contact.phone,
+                            time = smsTime,
+                            date = smsDate,
+                            replayText = "",
+                            textSms = messageToSend,
+                            companyName = contact.companyName
+                        )
+                        smsMessageDao.insertMessage(smsMessageModel)
+                    }
+                    Thread.sleep(alarm.delay)
+                }
+            } catch (e: Exception) {
+            }
+        }.start()
+
+
+
 
         Setting.lastMessageDate = Calendar.getInstance().time.time
 
@@ -118,4 +173,9 @@ class NotificationsPlugin(
     companion object {
         private const val OFFSET = 100000
     }
+
+    private fun export(date: String, time: String) {
+        ExcelRepoImpl().exportReports(date = date, time = time)
+    }
+
 }

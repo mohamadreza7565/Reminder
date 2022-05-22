@@ -9,6 +9,8 @@ object Constants {
     const val REQ_ALL_PERMISSIONS = 1005
     const val REQ_SMS_PERMISSIONS = 1006
     const val REQ_STORAGE_PERMISSIONS = 1007
+    const val REQ_READ_PHONE_STATE_PERMISSIONS = 1008
+    const val REQ_SELECT_CONTACTS_GROUP = 1009
 
     /**
      * Shp Keys
@@ -40,12 +42,9 @@ object Constants {
     /**
      * Key extras
      */
-    const val KEY_EXTRA_TITLE = "KEY_EXTRA_TITLE"
-    const val KEY_EXTRA_NAME = "KEY_EXTRA_NAME"
     const val KEY_EXTRA_TYPE = "KEY_EXTRA_TYPE"
-    const val KEY_EXTRA_QUERY = "KEY_EXTRA_QUERY"
-    const val KEY_EXTRA_IMAGE = "KEY_EXTRA_IMAGE"
-    const val KEY_EXTRA_CATEGORY_ID = "KEY_EXTRA_CATEGORY_ID"
+    const val KEY_EXTRA_TIME = "KEY_EXTRA_TIME"
+    const val KEY_EXTRA_DATE = "KEY_EXTRA_DATE"
     const val KEY_EXTRA_ID = "KEY_EXTRA_ID"
     const val KEY_EXTRA_DATA = "KEY_EXTRA_DATA"
 

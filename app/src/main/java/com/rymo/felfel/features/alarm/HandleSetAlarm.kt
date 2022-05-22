@@ -30,75 +30,80 @@ import com.rymo.felfel.interfaces.Alarm
 import com.rymo.felfel.interfaces.IAlarmsManager
 import com.rymo.felfel.interfaces.Intents
 import com.rymo.felfel.logger.Logger
+import com.rymo.felfel.persistance.Columns.Companion.DELAY
 
 class HandleSetAlarm : Activity() {
-  private val store: Store by globalInject()
-  private val alarmsManager: IAlarmsManager by globalInject()
-  private val logger: Logger by globalLogger("HandleSetAlarm")
+    private val store: Store by globalInject()
+    private val alarmsManager: IAlarmsManager by globalInject()
+    private val logger: Logger by globalLogger("HandleSetAlarm")
 
-  override fun onCreate(icicle: Bundle?) {
-    super.onCreate(icicle)
-    AlarmApplication.startOnce(application)
-    val intent = intent
-    when {
-      intent == null || intent.action != AlarmClock.ACTION_SET_ALARM -> {
-        finish()
-      }
-      !intent.hasExtra(AlarmClock.EXTRA_HOUR) -> {
-        // no extras - start list activity
-        startActivity(Intent(this, AlarmsListActivity::class.java))
-        finish()
-      }
-      intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false) -> {
-        createNewAlarmFromIntent(intent)
-        finish()
-      }
-      else -> {
-        val alarm = createNewAlarmFromIntent(intent)
+    override fun onCreate(icicle: Bundle?) {
+        super.onCreate(icicle)
+        AlarmApplication.startOnce(application)
+        val intent = intent
+        when {
+            intent == null || intent.action != AlarmClock.ACTION_SET_ALARM -> {
+                finish()
+            }
+            !intent.hasExtra(AlarmClock.EXTRA_HOUR) -> {
+                // no extras - start list activity
+                startActivity(Intent(this, AlarmsListActivity::class.java))
+                finish()
+            }
+            intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false) -> {
+                createNewAlarmFromIntent(intent)
+                finish()
+            }
+            else -> {
+                val alarm = createNewAlarmFromIntent(intent)
 
-        val startDetailsIntent = Intent(this, AlarmsListActivity::class.java)
-        startDetailsIntent.putExtra(Intents.EXTRA_ID, alarm.id)
-        startActivity(startDetailsIntent)
+                val startDetailsIntent = Intent(this, AlarmsListActivity::class.java)
+                startDetailsIntent.putExtra(Intents.EXTRA_ID, alarm.id)
+                startActivity(startDetailsIntent)
 
-        finish()
-      }
-    }
-  }
-
-  /** A new alarm has to be created or an existing one edited based on the intent extras. */
-  private fun createNewAlarmFromIntent(intent: Intent): Alarm {
-    val hours = intent.getIntExtra(AlarmClock.EXTRA_HOUR, 0)
-    val minutes = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, 0)
-    val msg = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE)
-    val label = msg ?: ""
-
-    val alarms = store.alarms().blockingFirst()
-    val sameAlarm =
-        alarms.find {
-          val hoursMatch = it.hour == hours
-          val minutesMatch = it.minutes == minutes
-          val labelsMatch = it.label == label
-          val noRepeating = !it.daysOfWeek.isRepeatSet
-          hoursMatch && minutesMatch && labelsMatch && noRepeating
+                finish()
+            }
         }
-
-    return if (sameAlarm == null) {
-      createNewAlarm(hours, minutes, label)
-    } else {
-      val edited = alarmsManager.getAlarm(sameAlarm.id)
-      if (edited != null && !edited.data.isEnabled) {
-        logger.debug { "Editing existing alarm ${sameAlarm.id}" }
-        edited.apply { enable(true) }
-      } else {
-        createNewAlarm(hours, minutes, label)
-      }
     }
-  }
 
-  private fun createNewAlarm(hours: Int, minutes: Int, label: String): Alarm {
-    logger.debug { "No alarm found, creating a new one" }
-    return alarmsManager.createNewAlarm().apply {
-      edit { copy(hour = hours, minutes = minutes, isEnabled = true, label = label) }
+    /** A new alarm has to be created or an existing one edited based on the intent extras. */
+    private fun createNewAlarmFromIntent(intent: Intent): Alarm {
+        val hours = intent.getIntExtra(AlarmClock.EXTRA_HOUR, 0)
+        val minutes = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, 0)
+        val msg = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE)
+        val delay = 0L
+        val simId = 0
+        val label = msg ?: ""
+
+        val alarms = store.alarms().blockingFirst()
+        val sameAlarm =
+            alarms.find {
+                val hoursMatch = it.hour == hours
+                val minutesMatch = it.minutes == minutes
+                val labelsMatch = it.label == label
+                val delayMatch = true
+                val simIdMatch = true
+                val noRepeating = !it.daysOfWeek.isRepeatSet
+                hoursMatch && minutesMatch && labelsMatch && noRepeating && delayMatch && simIdMatch
+            }
+
+        return if (sameAlarm == null) {
+            createNewAlarm(hours, minutes, label, simId, delay)
+        } else {
+            val edited = alarmsManager.getAlarm(sameAlarm.id)
+            if (edited != null && !edited.data.isEnabled) {
+                logger.debug { "Editing existing alarm ${sameAlarm.id}" }
+                edited.apply { enable(true) }
+            } else {
+                createNewAlarm(hours, minutes, label, simId, delay)
+            }
+        }
     }
-  }
+
+    private fun createNewAlarm(hours: Int, minutes: Int, label: String, simId: Int, delay: Long): Alarm {
+        logger.debug { "No alarm found, creating a new one" }
+        return alarmsManager.createNewAlarm().apply {
+            edit { copy(hour = hours, minutes = minutes, isEnabled = true, label = label, delay = delay, simId = simId) }
+        }
+    }
 }

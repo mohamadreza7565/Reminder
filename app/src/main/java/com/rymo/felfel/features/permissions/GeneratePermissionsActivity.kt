@@ -15,12 +15,11 @@ import com.rymo.felfel.features.main.MainActivity
 import com.rymo.felfel.features.permissions.adapter.GeneratePermissionSliderAdapter
 import com.rymo.felfel.features.permissions.model.GeneratePermissionModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 
 class GeneratePermissionsActivity : AppCompatActivity() {
 
-    private val mViewModel : GeneratePermissionViewModel by viewModel()
+    private val mViewModel: GeneratePermissionViewModel by viewModel()
     private val permissionList: MutableList<GeneratePermissionModel> = ArrayList()
     private lateinit var binding: ActivityGeneratePermissionsBinding
 
@@ -47,7 +46,8 @@ class GeneratePermissionsActivity : AppCompatActivity() {
         if (!RequestPermission.newInstance(this).checkSmsPermission(false)) {
             permissionList.add(
                 GeneratePermissionModel(
-                    RequestPermission.SMS, getString(R.string.smsPermissionDescription),
+                    RequestPermission.SMS,
+                    getString(R.string.smsPermissionDescription),
                     R.raw.sms_lottie
                 )
             )
@@ -56,11 +56,13 @@ class GeneratePermissionsActivity : AppCompatActivity() {
         if (!RequestPermission.newInstance(this).checkStoragePermission(false)) {
             permissionList.add(
                 GeneratePermissionModel(
-                    RequestPermission.STORAGE, getString(R.string.storagePermissionDescription),
+                    RequestPermission.STORAGE,
+                    getString(R.string.storagePermissionDescription),
                     R.raw.storage_lottie
                 )
             )
         }
+
 
         initViewPager()
 
@@ -95,13 +97,16 @@ class GeneratePermissionsActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        var allGenerated = true
         permissions.forEachIndexed { index, permission ->
-            if (grantResults[index] == PackageManager.PERMISSION_GRANTED) {
-                if (checkPermissionRequestCode(requestCode)) {
-                    changeSlide(permissionList)
-                    return
-                }
+            if (grantResults[index] == PackageManager.PERMISSION_DENIED) {
+                allGenerated = false
+            }
+        }
+        if (allGenerated) {
+            if (checkPermissionRequestCode(requestCode)) {
+                changeSlide(permissionList)
+                return
             }
         }
 
@@ -128,6 +133,13 @@ class GeneratePermissionsActivity : AppCompatActivity() {
         }
 
         return false
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == Constants.REQ_STORAGE_PERMISSIONS){
+            changeSlide(permissionList)
+        }
     }
 
 }

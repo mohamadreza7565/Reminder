@@ -40,6 +40,7 @@ import com.rymo.felfel.features.permissions.GeneratePermissionViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
 class AlarmApplication : MultiDexApplication() {
@@ -49,6 +50,7 @@ class AlarmApplication : MultiDexApplication() {
         startOnce(this)
         instance = this
         super.onCreate()
+        Timber.plant(Timber.DebugTree())
     }
 
     companion object {

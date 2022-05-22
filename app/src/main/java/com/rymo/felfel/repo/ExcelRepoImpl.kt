@@ -73,4 +73,57 @@ class ExcelRepoImpl : ExcelRepository {
 
     }
 
+    override fun exportReports(time: String, date: String) {
+
+        val direct = File("${AlarmApplication.instance!!.getExternalFilesDir(null)!!.path}/Reports")
+        if (!direct.exists()) {
+            direct.mkdirs()
+        }
+
+
+        var saveFileName = "${date.replace("/", "-")}_${time}.xls"
+        var saveTableName = "tbl_export_sms_message"
+
+        val file = File("${direct.path}/$saveFileName.xls")
+        if (file.exists()) {
+            file.delete()
+        }
+
+
+        val sqliteToExcel = SQLiteToExcel(AlarmApplication.instance!!, "db_felfel", direct.path)
+
+        sqliteToExcel.exportSingleTable(saveTableName,
+            saveFileName,
+            object : SQLiteToExcel.ExportListener {
+                override fun onStart() {
+                    exportExcelLiveData.postValue(
+                        BaseExceptionExportExcel(
+                            BaseExceptionExportExcel.ExcelExceptionType.LOADING
+                        )
+                    )
+                }
+
+
+                override fun onCompleted(filePath: String?) {
+                    Timber.e("Export message complete")
+                    exportExcelLiveData.postValue(
+                        BaseExceptionExportExcel(
+                            BaseExceptionExportExcel.ExcelExceptionType.SUCCESS, filePath
+                        )
+                    )
+                }
+
+                override fun onError(e: java.lang.Exception?) {
+                    Timber.e("Export message error -> ${e!!.message} \n directory -> ${direct.path}")
+                    exportExcelLiveData.postValue(
+                        BaseExceptionExportExcel(
+                            BaseExceptionExportExcel.ExcelExceptionType.ERROR,
+                            errorMessage = e.message
+                        )
+                    )
+                }
+
+            })
+    }
+
 }

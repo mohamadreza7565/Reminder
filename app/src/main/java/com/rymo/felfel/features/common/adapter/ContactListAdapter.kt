@@ -1,7 +1,6 @@
 package com.rymo.felfel.features.common.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -60,7 +59,7 @@ class ContactListAdapter(
             itemBinding.nameTv.text = contact.nameAndFamily
             itemBinding.phoneTv.text = contact.phone
             itemBinding.restaurantNameTv.text = contact.companyName
-            if (contact.companyName.isEmpty()){
+            if (contact.companyName.isEmpty()) {
                 itemBinding.restaurantNameTitleTv.gone()
             }
 
@@ -70,9 +69,17 @@ class ContactListAdapter(
                 itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.white))
             }
 
+            if (contact.replayMessage.isEmpty()) {
+                itemBinding.replayLyt.gone()
+            }else{
+                itemBinding.replayTv.text = contact.replayMessage
+            }
+
             itemBinding.root.setOnClickListener {
                 onClick.invoke(adapterPosition, false, contact)
             }
+
+
 
             itemBinding.root.setOnLongClickListener {
                 onClick.invoke(adapterPosition, true, contact)

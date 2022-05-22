@@ -11,10 +11,13 @@ import com.rymo.felfel.R
 import com.rymo.felfel.common.*
 import com.rymo.felfel.data.preferences.Setting
 import com.rymo.felfel.databinding.ActivityMainBinding
+import com.rymo.felfel.features.aboutMe.AboutMeActivity
 import com.rymo.felfel.features.alarm.alarmList.AlarmsListActivity
 import com.rymo.felfel.features.contacts.ContactsActivity
+import com.rymo.felfel.features.group.GroupActivity
 import com.rymo.felfel.features.reports.ReportsActivity
 import com.rymo.felfel.receiver.sms.SMSReceiverImpl
+import timber.log.Timber
 
 
 class MainActivity : Base.BaseActivity() {
@@ -35,7 +38,6 @@ class MainActivity : Base.BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         init()
 
-
     }
 
 
@@ -51,6 +53,10 @@ class MainActivity : Base.BaseActivity() {
         binding.llAlarm.setOnClickListener { AlarmsListActivity.start(this) }
 
         binding.llRepost.setOnClickListener { ReportsActivity.start(this) }
+
+        binding.llGroup.setOnClickListener { GroupActivity.start(this) }
+
+        binding.aboutMeBtn.setOnClickListener { AboutMeActivity.start(this) }
 
     }
 

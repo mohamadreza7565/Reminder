@@ -1,11 +1,20 @@
 package com.rymo.felfel.common;
 
+import static android.os.Build.VERSION.SDK_INT;
+
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.rymo.felfel.BuildConfig;
 
 import java.util.ArrayList;
 
@@ -201,6 +210,13 @@ public class RequestPermission {
             listPermissionsNeeded.add(Manifest.permission.READ_SMS);
         }
 
+        int permissionACCESS_READ_PHONE_STATE = ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.READ_PHONE_STATE);
+
+        if (permissionACCESS_READ_PHONE_STATE != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE);
+        }
+
         if (!listPermissionsNeeded.isEmpty()) {
             if (doRequest) {
                 ActivityCompat.requestPermissions(activity,
@@ -213,31 +229,42 @@ public class RequestPermission {
     }
 
     public boolean checkStoragePermission(Boolean doRequest) {
-        ArrayList<String> listPermissionsNeeded = new ArrayList<>();
 
-        int permissionACCESS_READ_STORAGE = ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (permissionACCESS_READ_STORAGE != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        }
-        int permissionACCESS_WRITE_STORAGE = ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permissionACCESS_WRITE_STORAGE != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-
-
-        if (!listPermissionsNeeded.isEmpty()) {
-            if (doRequest){
-                ActivityCompat.requestPermissions(activity,
-                        listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), Constants.REQ_STORAGE_PERMISSIONS);
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            Boolean generated = Environment.isExternalStorageManager();
+            if (!generated && doRequest) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setData(Uri.parse("package:" + BuildConfig.APPLICATION_ID));
+                activity.startActivityForResult(intent, Constants.REQ_STORAGE_PERMISSIONS);
             }
-            return false;
-        }
-        return true;
+            return generated;
+        } else {
+            ArrayList<String> listPermissionsNeeded = new ArrayList<>();
 
+            int permissionACCESS_READ_STORAGE = ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE);
+
+            if (permissionACCESS_READ_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            int permissionACCESS_WRITE_STORAGE = ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permissionACCESS_WRITE_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+
+
+            if (!listPermissionsNeeded.isEmpty()) {
+                if (doRequest) {
+                    ActivityCompat.requestPermissions(activity,
+                            listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), Constants.REQ_STORAGE_PERMISSIONS);
+                }
+                return false;
+            }
+            return true;
+        }
     }
 
 }

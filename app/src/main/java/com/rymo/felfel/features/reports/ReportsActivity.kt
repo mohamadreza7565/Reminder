@@ -12,16 +12,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.rymo.felfel.R
-import com.rymo.felfel.common.Constants
-import com.rymo.felfel.common.GlobalFragmentPagerAdapter
-import com.rymo.felfel.common.ZoomOutPageTransformer
-import com.rymo.felfel.common.startActivity
+import com.rymo.felfel.common.*
 import com.rymo.felfel.databinding.ActivityReportsBinding
+import com.rymo.felfel.features.common.dialog.DialogLoading
 import kotlinx.android.synthetic.main.include_tab.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReportsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityReportsBinding
+    val mViewModel: ReportsViewModel by viewModel()
     private var mTabAdapter: GlobalFragmentPagerAdapter? = null
     private lateinit var mInflater: LayoutInflater
     private var TAB_COUNT = 3
@@ -47,11 +47,12 @@ class ReportsActivity : AppCompatActivity() {
     }
 
     private fun initClick() {
+
         binding.toolbarView.onBackButtonClickListener = View.OnClickListener { onBackPressed() }
+
     }
 
     private fun initTab() {
-
         mInflater = LayoutInflater.from(this)
         mTabAdapter = GlobalFragmentPagerAdapter(
             supportFragmentManager, TAB_COUNT,

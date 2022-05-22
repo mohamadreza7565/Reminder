@@ -28,14 +28,14 @@ fun formatToast(context: Context, timeInMillis: Long): String {
   val minSeq =
       when (minutes) {
         0L -> ""
-        1L -> context.getString(R.string.minute)
+        1L -> context.getString(R.string.oneMinute)
         else -> context.getString(R.string.minutes, minutes.toString())
       }
 
   val hourSeq =
       when (hours) {
         0L -> ""
-        1L -> context.getString(R.string.hour)
+        1L -> context.getString(R.string.oneHour)
         else -> context.getString(R.string.hours, hours.toString())
       }
 

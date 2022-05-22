@@ -20,70 +20,75 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class InfoFragmentTest {
-  @JvmField @Rule var chain: TestRule = RuleChain.outerRule(ForceLocaleRule(Locale.US))
+    @JvmField
+    @Rule
+    var chain: TestRule = RuleChain.outerRule(ForceLocaleRule(Locale.US))
 
-  @Before
-  fun setUp() {
-    overrideIs24hoursFormatOverride(false)
-  }
+    @Before
+    fun setUp() {
+        overrideIs24hoursFormatOverride(false)
+    }
 
-  @Test
-  fun prealarmOff3Hours() {
-    val now = Calendar.getInstance().timeInMillis
-    assertThat(
+    @Test
+    fun prealarmOff3Hours() {
+        val now = Calendar.getInstance().timeInMillis
+        assertThat(
             computeTexts(
                 res = InstrumentationRegistry.getInstrumentation().targetContext.resources,
                 alarm =
-                    create(
-                        Calendar.getInstance().apply {
-                          timeInMillis = now
-                          add(Calendar.HOUR_OF_DAY, 3)
-                        },
-                        false,
-                    ),
+                create(
+                    Calendar.getInstance().apply {
+                        timeInMillis = now
+                        add(Calendar.HOUR_OF_DAY, 3)
+                    },
+                    false,
+                ),
                 now = now,
                 prealarmDuration = 30,
             )
-    )
-        .isEqualTo("3 hours")
-  }
+        )
+            .isEqualTo("3 hours")
+    }
 
-  @Test
-  fun prealarmOn3Days() {
-    val now = Calendar.getInstance().timeInMillis
-    assertThat(
+    @Test
+    fun prealarmOn3Days() {
+        val now = Calendar.getInstance().timeInMillis
+        assertThat(
             computeTexts(
                 res = InstrumentationRegistry.getInstrumentation().targetContext.resources,
                 alarm =
-                    create(
-                        Calendar.getInstance().apply {
-                          timeInMillis = now
-                          add(Calendar.DAY_OF_YEAR, 3)
-                        },
-                        true,
-                    ),
+                create(
+                    Calendar.getInstance().apply {
+                        timeInMillis = now
+                        add(Calendar.DAY_OF_YEAR, 3)
+                    },
+                    true,
+                ),
                 now = now,
                 prealarmDuration = 30,
             )
-    )
-        .isEqualTo("3 days\n30 minutes pre-alarm")
-  }
+        )
+            .isEqualTo("3 days\n30 minutes pre-alarm")
+    }
 
-  fun create(time: Calendar, isPrealarm: Boolean): Store.Next {
-    return Store.Next(
-        isPrealarm,
-        AlarmValue(
-            id = 1,
-            alarmtone = Alarmtone.Default,
-            daysOfWeek = DaysOfWeek(0),
-            hour = 12,
-            isEnabled = true,
-            isPrealarm = isPrealarm,
-            isVibrate = false,
-            label = "",
-            minutes = 1,
-            nextTime = time,
-            state = ""),
-        nextNonPrealarmTime = time.timeInMillis)
-  }
+    fun create(time: Calendar, isPrealarm: Boolean): Store.Next {
+        return Store.Next(
+            isPrealarm,
+            AlarmValue(
+                id = 1,
+                alarmtone = Alarmtone.Default,
+                daysOfWeek = DaysOfWeek(0),
+                hour = 12,
+                isEnabled = true,
+                isPrealarm = isPrealarm,
+                isVibrate = false,
+                label = "",
+                minutes = 1,
+                nextTime = time,
+                state = "",
+                delay = 0
+            ),
+            nextNonPrealarmTime = time.timeInMillis
+        )
+    }
 }

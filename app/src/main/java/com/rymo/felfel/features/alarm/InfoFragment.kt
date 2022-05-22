@@ -127,13 +127,13 @@ private fun formatRemainingTimeString(res: Resources, timeInMillis: Long, now: L
   val minSeq =
       when (minutes) {
         0L -> ""
-        1L -> res.getString(R.string.minute)
+        1L -> res.getString(R.string.oneMinute)
         else -> res.getString(R.string.minutes, minutes.toString())
       }
   val hourSeq =
       when (hours) {
         0L -> ""
-        1L -> res.getString(R.string.hour)
+        1L -> res.getString(R.string.oneHour)
         else -> res.getString(R.string.hours, hours.toString())
       }
 

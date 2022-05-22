@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rymo.felfel">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -46,8 +47,20 @@
         android:label="@string/simple_alarm_clock"
         android:supportsRtl="true"
         android:theme="@style/AlarmAlertFullScreenLightTheme"
-        tools:targetApi="lollipop"
-        tools:replace="android:label">
+        tools:replace="android:label"
+        tools:targetApi="lollipop">
+        <activity
+            android:name=".features.aboutMe.AboutMeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.detailsReport.DetailsReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.contactsGroup.ContactsGroupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.group.GroupActivity"
+            android:exported="false" />
         <activity
             android:name=".features.reports.ReportsActivity"
             android:exported="false" />

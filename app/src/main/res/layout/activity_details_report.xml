@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.rymo.felfel.view.BaseToolbar
+            android:id="@+id/toolbarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bt_background="?colorPrimary"
+            app:bt_showBack="true"
+            app:bt_tint="?colorOnPrimary"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".features.detailsReport.DetailsReportActivity">
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/detailsCv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        app:cardCornerRadius="@dimen/cornerRadius"
+                        app:cardElevation="@dimen/elevation"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/timeTimeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/timeTime"
+                                android:textAppearance="?textAppearanceHeadline5"
+                                android:textColor="?colorOnBackground"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/timeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:textAppearance="?textAppearanceHeadline6"
+                                android:textColor="?colorOnBackground"
+                                app:layout_constraintStart_toEndOf="@+id/timeTimeTv"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="1400/02/05 - 20:05" />
+
+                            <TextView
+                                android:id="@+id/messageTitleTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="@string/messageTitle"
+                                android:textAppearance="?textAppearanceHeadline5"
+                                android:textColor="?colorOnBackground"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/timeTimeTv" />
+
+                            <TextView
+                                android:id="@+id/messageTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:textAppearance="?textAppearanceHeadline6"
+                                android:textColor="?colorOnBackground"
+                                app:layout_constraintStart_toStartOf="@+id/timeTimeTv"
+                                app:layout_constraintTop_toBottomOf="@+id/messageTitleTv"
+                                tools:maxLines="5"
+                                tools:text="@tools:sample/lorem/random" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/contactsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/contacts"
+                        android:textAppearance="?textAppearanceHeadline4"
+                        android:textColor="?colorOnBackground"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detailsCv" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/reportsRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/contactsTitle" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/contactsTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="?colorPrimary"
+                        android:textAppearance="?textAppearanceHeadline5"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/notFindContact"
+                        android:id="@+id/emptyTv"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

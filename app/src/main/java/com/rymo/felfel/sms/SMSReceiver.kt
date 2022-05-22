@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.telephony.SmsMessage
+import timber.log.Timber
 
 abstract class SMSReceiver : BroadcastReceiver() {
 
@@ -15,12 +16,16 @@ abstract class SMSReceiver : BroadcastReceiver() {
         val smsMap: Map<String, String> = getMessage(intent)
         for (phone in smsMap.keys) {
             val msg = smsMap[phone]
+            Timber.e("SMS_RECEIVER -> onReceive")
             onMessageReceived(intent, phone, msg)
         }
     }
 
    private fun getMessage(intent: Intent?): Map<String, String> {
-        val map = HashMap<String, String>()
+
+       Timber.e("SMS_RECEIVER -> getMessage")
+
+       val map = HashMap<String, String>()
         val bundle = intent?.extras ?: return map
         val pdus = bundle["pdus"] as Array<Any>? ?: return map
         val messages = arrayOfNulls<SmsMessage>(pdus.size)

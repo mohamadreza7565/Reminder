@@ -1,5 +1,6 @@
 package com.rymo.felfel.features.contacts
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rymo.felfel.R
-import com.rymo.felfel.common.Base
-import com.rymo.felfel.common.BaseExceptionExportExcel
-import com.rymo.felfel.common.startActivity
-import com.rymo.felfel.common.toast
+import com.rymo.felfel.common.*
 import com.rymo.felfel.databinding.ActivityContactsBinding
 import com.rymo.felfel.features.common.adapter.ContactListAdapter
 import com.rymo.felfel.features.common.dialog.ConfirmDialog
@@ -37,6 +35,15 @@ class ContactsActivity : Base.BaseActivity() {
                 startActivity(mContext, it)
             }
         }
+
+        fun start(mContext: Activity, selectable: Boolean, groupId: Long) {
+            Intent(mContext, ContactsActivity::class.java).apply {
+                putExtra(Constants.KEY_EXTRA_ID, groupId)
+                putExtra(Constants.KEY_EXTRA_TYPE, selectable)
+            }.also {
+                mContext.startActivityForResult(it, Constants.REQ_SELECT_CONTACTS_GROUP)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,17 +54,23 @@ class ContactsActivity : Base.BaseActivity() {
 
     private fun init() {
         initClick()
+        initView()
         initList()
         provideContactList()
         observeBackup()
     }
 
+    private fun initView() {
+        if (intent.getBooleanExtra(Constants.KEY_EXTRA_TYPE, false)) {
+            binding.fab.text = getString(R.string.submit)
+            binding.toolbarView.setTitle(getString(R.string.addContactToGroup))
+        }
+    }
+
     private fun observeBackup() {
         mViewModel.exportLiveData().observe(this) {
             when {
-                it.type == BaseExceptionExportExcel.ExcelExceptionType.LOADING -> toast("Loading")
-                it.type == BaseExceptionExportExcel.ExcelExceptionType.SUCCESS -> toast("Success")
-                it.type == BaseExceptionExportExcel.ExcelExceptionType.ERROR -> toast("Error")
+
             }
         }
     }
@@ -71,9 +84,29 @@ class ContactsActivity : Base.BaseActivity() {
                 imageError = R.drawable.ic_empty_folder
             )
 
-            (binding.contactsRv.adapter as ContactListAdapter).contacts = it
+            if (!intent.getBooleanExtra(Constants.KEY_EXTRA_TYPE, false))
+                (binding.contactsRv.adapter as ContactListAdapter).contacts = it
+            else {
+                selectItemSelected()
+            }
 
         }
+    }
+
+    private fun selectItemSelected() {
+        mViewModel.getContactsGroup(intent.getLongExtra(Constants.KEY_EXTRA_ID, 0))
+
+        mViewModel.contactsGroupListLiveData.observe(this) {
+            mViewModel.contactListLiveData.value?.forEach { _viewModelContact ->
+                it!!.find { _contact -> _contact.id == _viewModelContact.id }?.let {
+                    _viewModelContact.selected = true
+                }
+            }
+            mViewModel.contactListLiveData.value?.let {
+                (binding.contactsRv.adapter as ContactListAdapter).contacts = it
+            }
+        }
+
     }
 
     private fun initList() {
@@ -87,7 +120,10 @@ class ContactsActivity : Base.BaseActivity() {
         if (longClick) {
             optionDialog(contact, position).show(supportFragmentManager, "CONTACT_OPTION")
         } else {
-
+            if (intent.getBooleanExtra(Constants.KEY_EXTRA_TYPE, false)) {
+                mViewModel.contactListLiveData.value!![position].selected = !contact.selected
+                (binding.contactsRv.adapter as ContactListAdapter).notifyDataSetChanged()
+            }
         }
     }
 
@@ -100,11 +136,11 @@ class ContactsActivity : Base.BaseActivity() {
                     mViewModel.deleteContact(contact)
                     mViewModel.contactListLiveData.value!!.removeAt(position)
                     mViewModel.contactListLiveData.postValue(mViewModel.contactListLiveData.value)
+                    mViewModel.export()
                 }
             }
         }
     }
-
 
     private fun confirmDialog(title: String, onSubmit: () -> Unit) = ConfirmDialog(this, title) {
         onSubmit()
@@ -112,11 +148,22 @@ class ContactsActivity : Base.BaseActivity() {
 
     private fun initClick() {
         binding.fab.setOnClickListener {
-            addContactDialog().show(supportFragmentManager, "ADD_CONTACT")
+            if (intent.getBooleanExtra(Constants.KEY_EXTRA_TYPE, false)) {
+                addContactsSelectedToGroup()
+                setResult(Activity.RESULT_OK, Intent())
+                finish()
+            } else {
+                addContactDialog().show(supportFragmentManager, "ADD_CONTACT")
+            }
         }
 
         toolbarView.onBackButtonClickListener = View.OnClickListener { onBackPressed() }
 
+    }
+
+    private fun addContactsSelectedToGroup() {
+        mViewModel.removeAllContactFromGroup(intent.getLongExtra(Constants.KEY_EXTRA_ID, 0))
+        mViewModel.addContactsToGroup(intent.getLongExtra(Constants.KEY_EXTRA_ID, 0))
     }
 
     private fun addContactDialog() =
@@ -124,6 +171,7 @@ class ContactsActivity : Base.BaseActivity() {
             mViewModel.addContact(it)
             mViewModel.contactListLiveData.value!!.add(it)
             mViewModel.contactListLiveData.postValue(mViewModel.contactListLiveData.value)
+            mViewModel.export()
         }
 
 

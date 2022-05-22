@@ -107,13 +107,13 @@
     <string name="days">"<xliff:g id="days">%s</xliff:g> days"</string>
 
     <!-- Alarm confirmation toast: singular hour -->
-    <string name="hour">1 hour</string>
+    <string name="oneHour">1 hour</string>
 
     <!-- Alarm confirmation toast: plural hours -->
     <string name="hours"><xliff:g id="hours">%s</xliff:g> hours</string>
 
     <!-- Alarm confirmation toast: singular minute -->
-    <string name="minute">"1 minute"</string>
+    <string name="oneMinute">"1 minute"</string>
 
     <!-- Alarm confirmation toast: plural minutes -->
     <string name="minutes">"<xliff:g id="minutes">%s</xliff:g> minutes"</string>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="?textAppearanceHeadline5"
+            android:id="@+id/titleTv"
+            android:text="@string/delayForMessages"/>
+
+
+        <RadioGroup
+            android:id="@+id/timeTypeRg"
+            app:layout_constraintTop_toBottomOf="@+id/titleTv"
+            android:layout_marginTop="20dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/minuteRb"
+                android:paddingStart="20dp"
+                android:text="@string/minute"/>
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/secondRb"
+                android:paddingStart="20dp"
+                android:text="@string/second"/>
+
+        </RadioGroup>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/timeEtLyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:clipToPadding="false"
+            android:hint="@string/delayForMessages"
+            android:textColorHint="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/timeTypeRg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/timeEt"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:inputType="number"
+                android:textAppearance="?textAppearanceBody1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cornerRadius="@dimen/cornerRadius"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:text="@string/cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/submitBtn"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="6dp"
+             />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submitBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cornerRadius="@dimen/cornerRadius"
+            android:layout_marginBottom="8dp"
+            app:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:text="@string/submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
+            app:layout_constraintTop_toBottomOf="@+id/timeEtLyt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

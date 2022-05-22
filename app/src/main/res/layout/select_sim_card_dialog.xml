@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.rymo.felfel.view.BaseToolbar
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:bt_background="?android:colorBackground"
+        app:bt_showBack="true"
+        app:bt_tint="?colorOnBackground"
+        app:bt_title="@string/simCard" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/simsRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+
+</LinearLayout>

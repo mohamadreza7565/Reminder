@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/addNewGroup"
+        android:textAppearance="?textAppearanceHeadline5"
+        android:layout_marginTop="20dp"
+        android:textColor="?colorOnBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/titleTv"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/groupNameEtLyt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:clipToPadding="false"
+        android:hint="@string/groupName"
+        android:textColorHint="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/groupNameEt"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:inputType="text"
+            android:textAppearance="?textAppearanceBody1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cornerRadius="@dimen/cornerRadius"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@color/red"
+        android:textColor="@color/white"
+        android:text="@string/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/submitBtn"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="6dp"
+        app:layout_constraintTop_toBottomOf="@+id/groupNameEtLyt" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cornerRadius="@dimen/cornerRadius"
+        android:layout_marginBottom="8dp"
+        app:backgroundTint="@color/green"
+        android:textColor="@color/white"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
+        app:layout_constraintTop_toBottomOf="@+id/customerCompanyNameEtLyt" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
