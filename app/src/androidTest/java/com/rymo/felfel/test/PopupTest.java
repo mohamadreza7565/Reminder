@@ -15,10 +15,10 @@ import android.provider.AlarmClock;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 import com.rymo.felfel.R;
-import com.rymo.felfel.alert.AlarmAlertFullScreen;
 import com.rymo.felfel.configuration.ContainerKt;
 import com.rymo.felfel.configuration.InjectKt;
 import com.rymo.felfel.configuration.Store;
+import com.rymo.felfel.features.main.MainActivity;
 import com.rymo.felfel.interfaces.Intents;
 import com.rymo.felfel.model.AlarmSetter;
 import com.rymo.felfel.model.AlarmValue;
@@ -41,9 +41,9 @@ import org.junit.runner.RunWith;
 /** Created by Yuriy on 12.07.2017. */
 @RunWith(AndroidJUnit4.class)
 public class PopupTest extends BaseTest {
-  public ActivityTestRule<AlarmAlertFullScreen> alertActivity =
-      new ActivityTestRule<AlarmAlertFullScreen>(
-          AlarmAlertFullScreen.class, false, /* autostart*/ false);
+  public ActivityTestRule<MainActivity> alertActivity =
+      new ActivityTestRule<MainActivity>(
+              MainActivity.class, false, /* autostart*/ false);
   public ActivityTestRule<AlarmsListActivity> listActivity =
       new ActivityTestRule<AlarmsListActivity>(
           AlarmsListActivity.class, false, /* autostart*/ true);

@@ -17,12 +17,14 @@ import com.rymo.felfel.features.alarm.DynamicThemeHandler
 import com.rymo.felfel.features.main.MainActivity
 import com.rymo.felfel.features.permissions.GeneratePermissionsActivity
 import com.rymo.felfel.repo.ExcelRepoImpl
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SplashActivity : Base.BaseActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private val dynamicThemeHandler: DynamicThemeHandler by globalInject()
+    private val mViewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,8 @@ class SplashActivity : Base.BaseActivity() {
         setLocale(this, Setting.language!!)
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+
+        mViewModel.addGroup()
 
         object : CountDownTimer(2000, 2000) {
             override fun onTick(p0: Long) {

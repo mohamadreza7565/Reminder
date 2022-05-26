@@ -40,5 +40,6 @@
     <color name="darkGray">#B3B6BE</color>
     <color name="transparent">#00000000</color>
     <color name="green">#22C781</color>
+    <color name="primary">#10823C</color>
 
 </resources>

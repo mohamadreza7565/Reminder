@@ -22,16 +22,14 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
 import androidx.core.app.NotificationCompat
 import com.rymo.felfel.*
-import com.rymo.felfel.alert.AlarmAlertFullScreen
 import com.rymo.felfel.common.PersianCalendar
 import com.rymo.felfel.common.SimUtil
 import com.rymo.felfel.common.convertArabic
-import com.rymo.felfel.common.toast
 import com.rymo.felfel.data.preferences.Setting
 import com.rymo.felfel.database.createDataBaseInstance
+import com.rymo.felfel.features.main.MainActivity
 import com.rymo.felfel.interfaces.Intents
 import com.rymo.felfel.interfaces.PresentationToModelIntents
 import com.rymo.felfel.logger.Logger
@@ -123,7 +121,7 @@ class NotificationsPlugin(
 
         Setting.lastMessageDate = Calendar.getInstance().time.time
 
-        val notify = Intent(mContext, AlarmAlertFullScreen::class.java)
+        val notify = Intent(mContext, MainActivity::class.java)
         notify.putExtra(Intents.EXTRA_ID, alarm.id)
         val pendingNotify =
             PendingIntent.getActivity(mContext, alarm.id, notify, pendingIntentUpdateCurrentFlag())
@@ -155,13 +153,13 @@ class NotificationsPlugin(
 
         pendingDismiss.send()
 
-        if (startForeground && isOreo()) {
-            logger.debug { "startForeground() for ${alarm.id}" }
-            enclosingService.startForeground(index + OFFSET, notification)
-        } else {
-            logger.debug { "nm.notify() for ${alarm.id}" }
-            nm.notify(index + OFFSET, notification)
-        }
+//        if (startForeground && isOreo()) {
+//            logger.debug { "startForeground() for ${alarm.id}" }
+//            enclosingService.startForeground(index + OFFSET, notification)
+//        } else {
+//            logger.debug { "nm.notify() for ${alarm.id}" }
+//            nm.notify(index + OFFSET, notification)
+//        }
     }
 
     fun cancel(index: Int) {

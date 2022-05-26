@@ -54,4 +54,10 @@
     <string name="myGmail">Gmail : enginner.it93@gmail.com</string>
     <string name="myWebsite">Website : seniorandroid.ir</string>
     <string name="doYouWantDeleteContactFromGroup">با اطمینان مخاطب را از گروه پاک میکنید ؟</string>
+    <string name="inputPhoneNumber">شماره تلفن را وارد کنید</string>
+    <string name="invalidPhoneNumber">فرمت شماره وارد شده اشتباه است</string>
+    <string name="inputContactName">نام مخاطب را وارد کنید</string>
+    <string name="defaultGroup">کارگاه</string>
+    <string name="canNotBeDeleteDefaultGroup">کارگاه را نمیتوان پاک کرد</string>
+    <string name="addAutoReply">تنظیم پاسخ خودکار</string>
 </resources>

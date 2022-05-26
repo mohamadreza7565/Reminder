@@ -85,8 +85,8 @@ android {
 
     compileSdk = 32
     defaultConfig {
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.0.3"
         applicationId = "com.rymo.felfel"
         minSdk = 22
         targetSdk = 32

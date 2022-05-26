@@ -84,13 +84,16 @@ class GroupActivity : Base.BaseActivity() {
         OptionGroupDialog(this) {
             when {
                 it == OptionGroupType.DELETE -> {
-                    var content = getString(R.string.doYouWantDeleteGroup)
-                    confirmDialog(content) {
-                        mViewModel.deleteGroup(group)
-                        (binding.groupsRv.adapter as GroupListAdapter).remove(position)
-                        mViewModel.groupListLiveData.postValue(mViewModel.groupListLiveData.value)
+                    if (group.id==1L){
+                        showSnackBar(getString(R.string.canNotBeDeleteDefaultGroup))
+                    }else{
+                        var content = getString(R.string.doYouWantDeleteGroup)
+                        confirmDialog(content) {
+                            mViewModel.deleteGroup(group)
+                            (binding.groupsRv.adapter as GroupListAdapter).remove(position)
+                            mViewModel.groupListLiveData.postValue(mViewModel.groupListLiveData.value)
+                        }
                     }
-
                 }
             }
         }.show(supportFragmentManager, "OPTION_GROUP")

@@ -25,7 +25,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/cancel"
         android:textColor="@color/white"
-        app:backgroundTint="@color/red"
+        app:backgroundTint="@color/primary"
         app:cornerRadius="@dimen/cornerRadius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

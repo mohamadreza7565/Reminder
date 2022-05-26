@@ -15,6 +15,7 @@ import com.rymo.felfel.features.aboutMe.AboutMeActivity
 import com.rymo.felfel.features.alarm.alarmList.AlarmsListActivity
 import com.rymo.felfel.features.contacts.ContactsActivity
 import com.rymo.felfel.features.group.GroupActivity
+import com.rymo.felfel.features.main.dialog.AddAutoReplyTextDialog
 import com.rymo.felfel.features.reports.ReportsActivity
 import com.rymo.felfel.receiver.sms.SMSReceiverImpl
 import timber.log.Timber
@@ -57,6 +58,8 @@ class MainActivity : Base.BaseActivity() {
         binding.llGroup.setOnClickListener { GroupActivity.start(this) }
 
         binding.aboutMeBtn.setOnClickListener { AboutMeActivity.start(this) }
+
+        binding.autoReplyBtn.setOnClickListener { AddAutoReplyTextDialog(this).show(supportFragmentManager,"ADD_AUTO_TEXT_MESSAGE") }
 
     }
 

@@ -19,13 +19,13 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        app:rippleColor="@color/red"
+        app:rippleColor="@color/primary"
         android:id="@+id/deleteBtn"
         android:layout_marginTop="8dp"
         android:textAppearance="?textAppearanceHeadline5"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintTop_toBottomOf="@+id/titleTv"
-        android:textColor="@color/red"
+        android:textColor="@color/primary"
         android:text="@string/delete"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

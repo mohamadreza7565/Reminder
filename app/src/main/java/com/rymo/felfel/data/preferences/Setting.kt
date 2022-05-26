@@ -56,6 +56,27 @@ object Setting {
             GlobalPreferences.setBoolean(Constants.SHP_FIRST_OPEN_ALARM, firstOpenAlarmList)
         }
 
+    var firstOpenApp: Boolean
+        get() {
+            return GlobalPreferences.getBoolean(
+                Constants.SHP_FIRST_OPEN_APP, true
+            )
+        }
+        set(firstOpenApp) {
+            GlobalPreferences.setBoolean(Constants.SHP_FIRST_OPEN_APP, firstOpenApp)
+        }
+
+
+    var autoReplayMessage: String?
+        get() {
+            return GlobalPreferences.getString(
+                Constants.SHP_AUTO_REPLAY_MESSAGE, ""
+            )
+        }
+        set(autoReplayMessage) {
+            GlobalPreferences.setString(Constants.SHP_AUTO_REPLAY_MESSAGE, autoReplayMessage)
+        }
+
     var lastMessageDate: Long
         get() {
             return GlobalPreferences.getLong(

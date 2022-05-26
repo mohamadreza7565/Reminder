@@ -9,10 +9,10 @@
         <item name="android:layoutDirection">rtl</item>
         <item name="bottomNavColor">@color/bottomNavColor</item>
         <item name="deActiveRatingBarBgBlackColor">@color/white</item>
-        <item name="activeRatingBarBgBlackColor">@color/red</item>
+        <item name="activeRatingBarBgBlackColor">@color/primary</item>
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Background brand color. -->
@@ -25,7 +25,7 @@
         <item name="colorOnSurface">@color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/red</item>
+        <item name="android:statusBarColor">@color/primary</item>
         <item name="android:navigationBarColor">@color/bottomNavColor</item>
 
         <!-- Customize your theme here. -->

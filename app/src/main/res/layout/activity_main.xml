@@ -49,6 +49,15 @@
                            android:src="@drawable/ic_info"
                            app:tint="?colorOnPrimary" />
 
+                       <ImageView
+                           android:layout_width="32dp"
+                           android:id="@+id/autoReplyBtn"
+                           android:layout_height="32dp"
+                           android:layout_gravity="start|center_vertical"
+                           android:layout_marginStart="16dp"
+                           android:src="@drawable/ic_replay_sms"
+                           app:tint="?colorOnPrimary" />
+
                    </com.rymo.felfel.view.BaseToolbar>
 
 

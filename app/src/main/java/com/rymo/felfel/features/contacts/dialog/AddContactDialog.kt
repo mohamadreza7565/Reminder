@@ -29,8 +29,10 @@ class AddContactDialog(
 
     private fun validation() {
         when {
-            customerNameEt.text.toString().isEmpty() -> customerNameEt.error = ""
-            customerPhoneEt.text.toString().isEmpty() -> customerPhoneEt.error = ""
+            customerNameEt.text.toString().isEmpty() -> customerNameEt.error = getString(R.string.inputContactName)
+            customerPhoneEt.text.toString().isEmpty() -> customerPhoneEt.error = getString(R.string.inputPhoneNumber)
+            customerPhoneEt.text.toString().length < 11 && !customerPhoneEt.text.toString().startsWith("09") ->
+                customerPhoneEt.error = getString(R.string.invalidPhoneNumber)
             else -> {
                 val contact = Contact(
                     0,
