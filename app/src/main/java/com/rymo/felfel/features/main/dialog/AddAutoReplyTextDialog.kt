@@ -15,6 +15,10 @@ class AddAutoReplyTextDialog(mContext: Context) : BaseBottomSheetDialog(mContext
 
     private fun initClick() {
 
+        Setting.autoReplayMessage?.let {
+            messageEt.setText(it)
+        }
+
         submitBtn.setOnClickListener {
             Setting.autoReplayMessage = messageEt.text.toString()
             dismiss()
