@@ -42,6 +42,7 @@ import com.rymo.felfel.features.reports.ReportsViewModel
 import com.rymo.felfel.features.splash.SplashViewModel
 import com.rymo.felfel.repo.ExcelRepoImpl
 import com.rymo.felfel.repo.ExcelRepository
+import com.rymo.felfel.services.http.createApiServiceInstance
 import com.rymo.felfel.stores.SharedRxDataStoreFactory
 import com.rymo.felfel.util.Optional
 import com.rymo.felfel.wakelock.WakeLockManager
@@ -143,9 +144,10 @@ fun startKoin(context: Context): Koin {
         }
 
         single { createDataBaseInstance(context) }
+        single { createApiServiceInstance() }
 
         factory {
-            ExcelRepoImpl()
+            ExcelRepoImpl(get())
         }
 
         viewModel { GeneratePermissionViewModel() }

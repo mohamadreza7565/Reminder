@@ -14,6 +14,8 @@ data class Contact(
     @Ignore
     val replayMessage: String = "",
     @Ignore
+    var date: Long = 0L,
+    @Ignore
     var selected: Boolean = false,
 )
 

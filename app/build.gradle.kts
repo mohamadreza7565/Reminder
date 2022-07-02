@@ -85,8 +85,8 @@ android {
 
     compileSdk = 32
     defaultConfig {
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 7
+        versionName = "1.0.6"
         applicationId = "com.rymo.felfel"
         minSdk = 22
         targetSdk = 32
@@ -188,6 +188,13 @@ dependencies {
         exclude("org.apache.xmlbeans")
     }
     implementation("com.ajts.androidmads.SQLite2Excel:library:1.0.4")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation("com.github.chuckerteam.chucker:library:3.5.2")
+
 }
 
 dependencies {

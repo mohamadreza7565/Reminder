@@ -32,7 +32,6 @@ public class RequestPermission {
         this.activity = activity;
     }
 
-
     public boolean checkPermissionList(String[] permissionTypes) {
 
         ArrayList<String> listPermissionsNeeded = new ArrayList<>();

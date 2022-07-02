@@ -86,7 +86,8 @@ class InfoFragmentTest {
                 minutes = 1,
                 nextTime = time,
                 state = "",
-                delay = 0
+                delay = 0,
+                simId = 0
             ),
             nextNonPrealarmTime = time.timeInMillis
         )

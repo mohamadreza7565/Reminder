@@ -82,18 +82,17 @@ class GroupActivity : Base.BaseActivity() {
 
     private fun optionGroupDialog(group: Group, position: Int) =
         OptionGroupDialog(this) {
-            when {
-                it == OptionGroupType.DELETE -> {
-                    if (group.id==1L){
-                        showSnackBar(getString(R.string.canNotBeDeleteDefaultGroup))
-                    }else{
-                        var content = getString(R.string.doYouWantDeleteGroup)
-                        confirmDialog(content) {
-                            mViewModel.deleteGroup(group)
-                            (binding.groupsRv.adapter as GroupListAdapter).remove(position)
-                            mViewModel.groupListLiveData.postValue(mViewModel.groupListLiveData.value)
-                        }
+            when (it) {
+                OptionGroupType.DELETE -> {
+                    var content = getString(R.string.doYouWantDeleteGroup)
+                    confirmDialog(content) {
+                        mViewModel.deleteGroup(group)
+                        (binding.groupsRv.adapter as GroupListAdapter).remove(position)
+                        mViewModel.groupListLiveData.postValue(mViewModel.groupListLiveData.value)
                     }
+                }
+                OptionGroupType.EDIT -> {
+                    addGroupDialog(group)
                 }
             }
         }.show(supportFragmentManager, "OPTION_GROUP")
@@ -105,19 +104,23 @@ class GroupActivity : Base.BaseActivity() {
 
     private fun initClick() {
         binding.fab.setOnClickListener {
-            addGroupDialog().show(supportFragmentManager, "ADD_GROUP")
+            addGroupDialog()
         }
 
         toolbarView.onBackButtonClickListener = View.OnClickListener { onBackPressed() }
 
     }
 
-    private fun addGroupDialog() =
-        AddGroupDialog(this) {
-            mViewModel.addGroup(it)
-            mViewModel.groupListLiveData.value!!.add(it)
-            mViewModel.groupListLiveData.postValue(mViewModel.groupListLiveData.value)
-        }
+    private fun addGroupDialog(group: Group? = null) =
+        AddGroupDialog(this, group) {
+            if (group == null) {
+                mViewModel.addGroup(it)
+            } else {
+                it.id = group.id
+                mViewModel.editGroup(it)
+            }
+            mViewModel.getGroups()
+        }.show(supportFragmentManager, "ADD_GROUP")
 
 
 }

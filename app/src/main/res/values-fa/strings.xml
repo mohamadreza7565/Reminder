@@ -51,7 +51,7 @@
     <string name="notFindContact">مخاطبی یافت نشد</string>
     <string name="aboutMe">درباره من</string>
     <string name="connectWithMeClick">راه های ارتباط با من</string>
-    <string name="myGmail">Gmail : enginner.it93@gmail.com</string>
+    <string name="myGmail">Gmail : engineer.it93@gmail.com</string>
     <string name="myWebsite">Website : seniorandroid.ir</string>
     <string name="doYouWantDeleteContactFromGroup">با اطمینان مخاطب را از گروه پاک میکنید ؟</string>
     <string name="inputPhoneNumber">شماره تلفن را وارد کنید</string>
@@ -60,4 +60,10 @@
     <string name="defaultGroup">کارگاه</string>
     <string name="canNotBeDeleteDefaultGroup">کارگاه را نمیتوان پاک کرد</string>
     <string name="addAutoReply">تنظیم پاسخ خودکار</string>
+    <string name="workshop">کارگاه</string>
+    <string name="edit">ویرایش</string>
+    <string name="smsFromServer">از طریق سرور (اینترنت دستگاه باید روشن باشد)</string>
+    <string name="excel">اکسل</string>
+    <string name="text">فایل متنی</string>
+    <string name="share">اشتراک گذاری</string>
 </resources>

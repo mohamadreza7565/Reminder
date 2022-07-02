@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/share"
+        android:textAppearance="?textAppearanceHeadline4"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/excelBtn"
+        android:layout_width="0dp"
+        app:backgroundTint="@color/primary"
+        android:layout_height="55dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/excel"
+        android:textAppearance="?textAppearanceHeadline5"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/cornerRadius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textBtn"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv"
+        app:rippleColor="@color/white" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/textBtn"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        app:backgroundTint="@color/primary"
+        android:layout_marginBottom="20dp"
+        android:text="@string/text"
+        android:textAppearance="?textAppearanceHeadline5"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/cornerRadius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/excelBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv"
+        app:rippleColor="@color/white" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

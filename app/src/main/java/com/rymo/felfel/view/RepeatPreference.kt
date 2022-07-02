@@ -31,13 +31,13 @@ fun DaysOfWeek.showDialog(context: Context): Single<DaysOfWeek> {
     val weekdays = DateFormatSymbols().weekdays
     val entries =
         arrayOf(
+            "شنبه",
+            "یکشنبه",
             "دوشنبه",
             "سه شنبه",
             "چهارشنبه",
             "پنجشنبه",
-            "جمعه",
-            "شنبه",
-            "یکشنبه")
+            "جمعه")
     var mutableDays = coded
     AlertDialog.Builder(context)
         .setMultiChoiceItems(entries, booleanArray) { _, which, isChecked ->

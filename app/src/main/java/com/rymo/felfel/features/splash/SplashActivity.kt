@@ -33,8 +33,6 @@ class SplashActivity : Base.BaseActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
-        mViewModel.addGroup()
-
         object : CountDownTimer(2000, 2000) {
             override fun onTick(p0: Long) {
 

@@ -24,6 +24,11 @@ class OptionGroupDialog(context: Context, private val onSubmit: (OptionGroupType
             dismiss()
         }
 
+        editBtn.setOnClickListener {
+            onSubmit.invoke(OptionGroupType.EDIT)
+            dismiss()
+        }
+
     }
 
 }

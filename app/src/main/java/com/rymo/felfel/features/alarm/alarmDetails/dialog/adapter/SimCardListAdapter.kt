@@ -1,19 +1,23 @@
 package com.rymo.felfel.features.alarm.alarmDetails.dialog.adapter
 
+import android.content.Context
 import android.telephony.SubscriptionInfo
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rymo.felfel.R
+import com.rymo.felfel.common.Constants
 import com.rymo.felfel.configuration.AlarmApplication
 import com.rymo.felfel.databinding.GroupListItemBinding
 import com.rymo.felfel.databinding.SimCardListItemBinding
 import com.rymo.felfel.model.Group
 
 class SimCardListAdapter(
+    private val mContext: Context,
     private val simCardSelected: Int,
-    private val onClick: ((simCard: SubscriptionInfo) -> Unit)
+    private val onSimClick: (simCard: SubscriptionInfo) -> Unit,
+    private val onApiSelect: () -> Unit,
 ) :
     RecyclerView.Adapter<SimCardListAdapter.ViewHolder>() {
 
@@ -46,10 +50,13 @@ class SimCardListAdapter(
     }
 
     override fun onBindViewHolder(holder: SimCardListAdapter.ViewHolder, position: Int) {
-        holder.bind(sims[position])
+        when (position) {
+            0 -> holder.bind()
+            else -> holder.bind(sims[position - 1])
+        }
     }
 
-    override fun getItemCount(): Int = sims.size
+    override fun getItemCount(): Int = (sims.size + 1)
 
     inner class ViewHolder(binding: SimCardListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -68,10 +75,27 @@ class SimCardListAdapter(
             }
 
             itemBinding.root.setOnClickListener {
-                onClick.invoke(sim)
+                onSimClick.invoke(sim)
             }
 
 
+        }
+
+        fun bind() {
+
+            itemBinding.nameTv.text = mContext.getString(R.string.smsFromServer)
+
+            itemBinding.simIv.setImageResource(R.drawable.ic_cloud)
+
+            if (simCardSelected == Constants.API_ID) {
+                itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.redLight2))
+            } else {
+                itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.white))
+            }
+
+            itemBinding.root.setOnClickListener {
+                onApiSelect.invoke()
+            }
         }
 
     }

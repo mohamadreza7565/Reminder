@@ -21,7 +21,9 @@ object Constants {
     const val SHP_FIRST_OPEN_ALARM = "SHP_FIRST_OPEN_ALARM"
     const val SHP_FIRST_OPEN_APP = "SHP_FIRST_OPEN_APP"
     const val SHP_AUTO_REPLAY_MESSAGE = "SHP_AUTO_REPLAY_MESSAGE"
+    const val SHP_AUTO_REPLAY_MESSAGE_SIM_ID = "SHP_AUTO_REPLAY_MESSAGE_SIM_ID"
     const val SHP_LAST_MESSAGE_DATE = "SHP_LAST_MESSAGE_DATE"
+    const val SHP_WORK_SHOP_SIM_CARD = "SHP_WORK_SHOP_SIM_CARD"
     const val SHP_CURRENT_USER_ID = "CURRENT_USER_ID"
     const val SHP_DEVICE_ID_ID = "DEVICE_ID"
     const val SHP_FCM_TOKEN = "FCM_TOKEN"
@@ -58,6 +60,11 @@ object Constants {
     const val SEND_MESSAGES_REPORT = 0
     const val GET_MESSAGES_REPORT = 1
     const val NOT_GET_MESSAGES_USERS_REPORT = 2
+
+    /**
+     * Sim id
+     */
+    const val API_ID = -1
 
 
 }

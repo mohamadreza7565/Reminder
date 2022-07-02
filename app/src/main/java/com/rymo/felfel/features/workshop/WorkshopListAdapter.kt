@@ -1,4 +1,4 @@
-package com.rymo.felfel.features.common.adapter
+package com.rymo.felfel.features.workshop
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,20 +10,21 @@ import com.rymo.felfel.common.gone
 import com.rymo.felfel.configuration.AlarmApplication
 import com.rymo.felfel.databinding.ContactListItemBinding
 import com.rymo.felfel.model.Contact
+import com.rymo.felfel.model.WorkshopModel
 
-class ContactListAdapter(
+class WorkshopListAdapter(
     private val canBeEdit: Boolean = true,
-    private val onClick: ((position: Int, longClick: Boolean, contact: Contact) -> Unit)
+    private val onClick: ((position: Int, longClick: Boolean, contact: WorkshopModel) -> Unit)
 ) :
-    RecyclerView.Adapter<ContactListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<WorkshopListAdapter.ViewHolder>() {
 
-    var contacts: MutableList<Contact> = ArrayList()
+    var contacts: MutableList<WorkshopModel> = ArrayList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    fun update(position: Int, contact: Contact) {
+    fun update(position: Int, contact: WorkshopModel) {
         contacts[position] = contact
         notifyDataSetChanged()
     }
@@ -33,19 +34,19 @@ class ContactListAdapter(
         notifyDataSetChanged()
     }
 
-    fun add(contact: Contact) {
+    fun add(contact: WorkshopModel) {
         contacts.add(contact)
         notifyDataSetChanged()
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkshopListAdapter.ViewHolder {
         val binding: ContactListItemBinding =
             DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.contact_list_item, parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ContactListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WorkshopListAdapter.ViewHolder, position: Int) {
         holder.bind(contacts[position])
     }
 
@@ -55,35 +56,15 @@ class ContactListAdapter(
 
         private val itemBinding = binding
 
-        fun bind(contact: Contact) {
+        fun bind(contact: WorkshopModel) {
 
-            itemBinding.nameTv.text = contact.nameAndFamily
+            itemBinding.nameTv.text = contact.name
             itemBinding.phoneTv.text = contact.phone
-            itemBinding.restaurantNameTv.text = contact.companyName
-            if (contact.companyName.isEmpty()) {
-                itemBinding.companyLyt.gone()
-            }
-
-            if (contact.selected) {
-                itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.redLight2))
-            } else {
-                itemBinding.itemCv.setCardBackgroundColor(AlarmApplication.instance!!.resources.getColor(R.color.white))
-            }
-
-            if (contact.replayMessage.isEmpty()) {
-                itemBinding.replayLyt.gone()
-            } else {
-                itemBinding.replayTv.text = contact.replayMessage
-            }
+            itemBinding.companyLyt.gone()
+            itemBinding.replayLyt.gone()
 
             itemBinding.root.setOnClickListener {
                 onClick.invoke(adapterPosition, false, contact)
-            }
-
-            if (contact.date == 0L) {
-                itemBinding.dateTv.gone()
-            } else {
-                itemBinding.dateTv.text = PersianCalendar.getInstance(contact.date/1000).iranianDate
             }
 
 

@@ -24,6 +24,11 @@ class OptionContactDialog(context: Context, private val onSubmit: (OptionContact
             dismiss()
         }
 
+        editBtn.setOnClickListener {
+            onSubmit.invoke(OptionContactType.EDIT)
+            dismiss()
+        }
+
     }
 
 }

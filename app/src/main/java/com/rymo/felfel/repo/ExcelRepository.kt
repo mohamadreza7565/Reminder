@@ -11,4 +11,6 @@ interface ExcelRepository {
 
     fun exportReports(time: String, date: String)
 
+    fun exportWorkshop()
+
 }

@@ -13,11 +13,5 @@ class SplashViewModel(
 
     private val contactDao = appDatabase.contactDao()
 
-     fun addGroup() {
-        if (Setting.firstOpenApp) {
-            contactDao.createGroup(Group(name = AlarmApplication.instance!!.getString(R.string.defaultGroup)))
-            Setting.firstOpenApp = false
-        }
-    }
 
 }

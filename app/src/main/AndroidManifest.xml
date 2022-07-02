@@ -47,8 +47,12 @@
         android:label="@string/simple_alarm_clock"
         android:supportsRtl="true"
         android:theme="@style/AlarmAlertFullScreenLightTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:label"
         tools:targetApi="lollipop">
+        <activity
+            android:name=".features.workshop.WorkshopActivity"
+            android:exported="false" />
         <activity
             android:name=".features.aboutMe.AboutMeActivity"
             android:exported="false" />
@@ -115,7 +119,6 @@
  This activity is basically the same as AlarmAlert
              but full-screen so that it can turn the display on.
         -->
-
         <activity
             android:name=".features.alarm.TransparentActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
@@ -159,10 +162,22 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver> <!-- Persistence -->
+
         <provider
             android:name=".persistance.AlarmProvider"
             android:authorities="${applicationId}.model"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

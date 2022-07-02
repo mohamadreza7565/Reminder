@@ -8,230 +8,212 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.rymo.felfel.view.BaseToolbar
+            android:id="@+id/toolbarView"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:translationZ="10dp"
+            app:bt_background="?colorPrimary"
+            app:bt_showBack="false">
 
-       <androidx.core.widget.NestedScrollView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/appName"
+                android:textAppearance="?textAppearanceHeadline5"
+                android:textColor="?colorOnPrimary" />
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="vertical">
+            <ImageView
+                android:id="@+id/aboutMeBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_info"
+                android:visibility="gone"
+                app:tint="?colorOnPrimary" />
 
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent">
+          <com.google.android.material.button.MaterialButton
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/reportBtn"
+              app:cornerRadius="@dimen/cornerRadius"
+              app:backgroundTint="@color/blue"
+              android:layout_marginEnd="16dp"
+              android:text="@string/report"
+              app:rippleColor="@color/white"
+              android:layout_gravity="end|center_vertical"/>
+            <ImageView
+                android:id="@+id/autoReplyBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_replay_sms"
+                app:tint="?colorOnPrimary" />
 
-                   <com.rymo.felfel.view.BaseToolbar
-                       android:id="@+id/toolbarView"
-                       android:layout_width="0dp"
-                       android:layout_height="56dp"
-                       app:bt_background="?colorPrimary"
-                       app:bt_showBack="false"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent">
-
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_gravity="center"
-                           android:text="@string/appName"
-                           android:textAppearance="?textAppearanceHeadline5"
-                           android:textColor="?colorOnPrimary" />
-
-                       <ImageView
-                           android:layout_width="32dp"
-                           android:id="@+id/aboutMeBtn"
-                           android:layout_height="32dp"
-                           android:layout_gravity="end|center_vertical"
-                           android:layout_marginEnd="16dp"
-                           android:src="@drawable/ic_info"
-                           app:tint="?colorOnPrimary" />
-
-                       <ImageView
-                           android:layout_width="32dp"
-                           android:id="@+id/autoReplyBtn"
-                           android:layout_height="32dp"
-                           android:layout_gravity="start|center_vertical"
-                           android:layout_marginStart="16dp"
-                           android:src="@drawable/ic_replay_sms"
-                           app:tint="?colorOnPrimary" />
-
-                   </com.rymo.felfel.view.BaseToolbar>
+        </com.rymo.felfel.view.BaseToolbar>
 
 
-                   <LinearLayout
-                       android:id="@+id/headerLyt"
-                       android:layout_width="@dimen/_200sdp"
-                       android:layout_height="@dimen/_200sdp"
-                       android:layout_marginTop="@dimen/_20sdp"
-                       android:background="@drawable/bg_circle_gray"
-                       android:gravity="center"
-                       android:orientation="vertical"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toBottomOf="@+id/toolbarView">
+        <com.rymo.felfel.view.scroll.ObservableScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
+            android:layout_marginBottom="100dp"
+            android:fillViewport="true">
 
-                       <TextView
-                           android:id="@+id/clockTv"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:textAppearance="?textAppearanceHeadline3"
-                           android:textColor="?colorOnBackground"
-                           app:layout_constraintEnd_toEndOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toTopOf="parent"
-                           tools:text="15:20" />
-
-                       <TextView
-                           android:id="@+id/dateTv"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="8dp"
-                           android:textAppearance="?textAppearanceHeadline6"
-                           android:textColor="?colorOnBackground"
-                           app:layout_constraintEnd_toEndOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/clockTv"
-                           tools:text="شنبه - 24 اریبهشت" />
-
-                       <TextView
-                           android:id="@+id/lastMessageDateTitle"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="16dp"
-                           android:text="@string/dateLastMessage"
-                           android:textAppearance="?textAppearanceHeadline6"
-                           android:textColor="?colorPrimary"
-                           app:layout_constraintEnd_toEndOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/dateTv" />
-
-                       <TextView
-                           android:id="@+id/lastMessageDateTv"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="8dp"
-                           android:textAppearance="?textAppearanceHeadline6"
-                           android:textColor="?colorOnBackground"
-                           app:layout_constraintEnd_toEndOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/lastMessageDateTitle"
-                           tools:text="شنبه - 24 اریبهشت - 14:15" />
-
-                   </LinearLayout>
-
-                   <LinearLayout
-                       android:id="@+id/llAlarm"
-                       style="@style/home_box_layout"
-                       android:layout_width="0dp"
-                       android:layout_height="0dp"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="20dp"
-                       android:layout_marginEnd="20dp"
-                       android:orientation="vertical"
-                       app:layout_constraintDimensionRatio="1:1"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toEndOf="@+id/llContact"
-                       app:layout_constraintTop_toBottomOf="@+id/headerLyt"
-                       app:layout_constraintVertical_chainStyle="packed">
-
-                       <ImageView
-                           style="@style/home_box_image"
-                           android:scaleType="centerCrop"
-                           android:src="@drawable/ic_alarm" />
-
-                       <TextView
-                           style="@style/home_box_text"
-                           android:text="@string/autoMessage" />
-
-                   </LinearLayout>
-
-                   <LinearLayout
-                       android:id="@+id/llContact"
-                       style="@style/home_box_layout"
-                       android:layout_width="0dp"
-                       android:layout_height="0dp"
-                       android:layout_marginStart="20dp"
-                       android:layout_marginTop="20dp"
-                       android:layout_marginEnd="10dp"
-                       android:orientation="vertical"
-                       app:layout_constraintDimensionRatio="1:1"
-                       app:layout_constraintEnd_toStartOf="@+id/llAlarm"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toBottomOf="@+id/headerLyt"
-                       app:layout_constraintVertical_chainStyle="packed">
-
-                       <ImageView
-                           style="@style/home_box_image"
-                           android:scaleType="centerCrop"
-                           android:src="@drawable/ic_contact" />
-
-                       <TextView
-                           style="@style/home_box_text"
-                           android:text="@string/contacts" />
-
-                   </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
-                   <LinearLayout
-                       android:id="@+id/llGroup"
-                       style="@style/home_box_layout"
-                       android:layout_width="0dp"
-                       android:layout_height="0dp"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="20dp"
-                       android:layout_marginEnd="20dp"
-                       android:orientation="vertical"
-                       app:layout_constraintDimensionRatio="1:1"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toEndOf="@+id/llRepost"
-                       app:layout_constraintTop_toBottomOf="@+id/llAlarm"
-                       app:layout_constraintVertical_chainStyle="packed">
+                <LinearLayout
+                    android:id="@+id/headerLyt"
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="@dimen/_200sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/bg_circle_gray"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                       <ImageView
-                           style="@style/home_box_image"
-                           android:scaleType="centerCrop"
-                           android:src="@drawable/ic_group" />
+                    <TextView
+                        android:id="@+id/clockTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?textAppearanceHeadline3"
+                        android:textColor="?colorOnBackground"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="15:20" />
 
-                       <TextView
-                           style="@style/home_box_text"
-                           android:text="@string/groups" />
+                    <TextView
+                        android:id="@+id/dateTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?textAppearanceHeadline6"
+                        android:textColor="?colorOnBackground"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/clockTv"
+                        tools:text="شنبه - 24 اریبهشت" />
 
-                   </LinearLayout>
+                    <TextView
+                        android:id="@+id/lastMessageDateTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/dateLastMessage"
+                        android:textAppearance="?textAppearanceHeadline6"
+                        android:textColor="?colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dateTv" />
 
-                   <LinearLayout
-                       android:id="@+id/llRepost"
-                       style="@style/home_box_layout"
-                       android:layout_width="0dp"
-                       android:layout_height="0dp"
-                       android:layout_marginStart="20dp"
-                       android:layout_marginTop="20dp"
-                       android:layout_marginEnd="10dp"
-                       android:orientation="vertical"
-                       app:layout_constraintDimensionRatio="1:1"
-                       app:layout_constraintEnd_toStartOf="@+id/llSetting"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toBottomOf="@+id/llAlarm"
-                       app:layout_constraintVertical_chainStyle="packed">
+                    <TextView
+                        android:id="@+id/lastMessageDateTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?textAppearanceHeadline6"
+                        android:textColor="?colorOnBackground"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lastMessageDateTitle"
+                        tools:text="شنبه - 24 اریبهشت - 14:15" />
 
-                       <ImageView
-                           style="@style/home_box_image"
-                           android:scaleType="centerCrop"
-                           android:src="@drawable/ic_report" />
+                </LinearLayout>
 
-                       <TextView
-                           style="@style/home_box_text"
-                           android:text="@string/report" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvInbox"
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/contact_list_item"
+                    android:layout_height="match_parent" />
 
-                   </LinearLayout>
+            </LinearLayout>
 
-               </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.rymo.felfel.view.scroll.ObservableScrollView>
 
-           </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="4">
 
-       </androidx.core.widget.NestedScrollView>
+            <LinearLayout
+                android:id="@+id/llAlarm"
+                style="@style/home_box_layout"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/home_box_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_alarm" />
+
+                <TextView
+                    style="@style/home_box_text"
+                    android:text="@string/autoMessage" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llContact"
+                style="@style/home_box_layout"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/home_box_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_contact" />
+
+                <TextView
+                    style="@style/home_box_text"
+                    android:text="@string/contacts" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llGroup"
+                style="@style/home_box_layout"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/home_box_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_group" />
+
+                <TextView
+                    style="@style/home_box_text"
+                    android:text="@string/groups" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llWorkshop"
+                style="@style/home_box_layout"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/home_box_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_workshop" />
+
+                <TextView
+                    style="@style/home_box_text"
+                    android:text="@string/workshop" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

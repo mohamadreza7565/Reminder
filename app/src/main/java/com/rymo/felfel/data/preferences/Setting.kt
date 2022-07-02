@@ -2,6 +2,7 @@ package com.rymo.felfel.data.preferences
 
 import com.rymo.felfel.common.Constants
 import com.rymo.felfel.common.GlobalPreferences
+import com.rymo.felfel.common.SimUtil
 
 
 object Setting {
@@ -77,6 +78,17 @@ object Setting {
             GlobalPreferences.setString(Constants.SHP_AUTO_REPLAY_MESSAGE, autoReplayMessage)
         }
 
+
+    var autoReplayMessageSimId: Int
+        get() {
+            return GlobalPreferences.getInt(
+                Constants.SHP_AUTO_REPLAY_MESSAGE_SIM_ID, -10
+            )
+        }
+        set(autoReplayMessageSimId) {
+            GlobalPreferences.setInt(Constants.SHP_AUTO_REPLAY_MESSAGE_SIM_ID, autoReplayMessageSimId)
+        }
+
     var lastMessageDate: Long
         get() {
             return GlobalPreferences.getLong(
@@ -85,6 +97,16 @@ object Setting {
         }
         set(lastMessageDate) {
             GlobalPreferences.setLong(Constants.SHP_LAST_MESSAGE_DATE, lastMessageDate)
+        }
+
+    var workShopSimCard: Int
+        get() {
+            return GlobalPreferences.getInt(
+                Constants.SHP_WORK_SHOP_SIM_CARD, SimUtil.getSimCount()[0].subscriptionId
+            )
+        }
+        set(workShopSimCard) {
+            GlobalPreferences.setInt(Constants.SHP_WORK_SHOP_SIM_CARD, workShopSimCard)
         }
 
     fun clearPreferences() {

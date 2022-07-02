@@ -12,8 +12,8 @@ data class AlarmValue(
     val hour: Int,
     val minutes: Int,
     val isPrealarm: Boolean,
-    val alarmtone: Alarmtone,
-    val isVibrate: Boolean,
+    var alarmtone: Alarmtone,
+    var isVibrate: Boolean,
     val label: String,
     val daysOfWeek: DaysOfWeek,
     val delay: Long,
@@ -33,7 +33,7 @@ data class AlarmValue(
             is Alarmtone.Default -> RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             is Alarmtone.Sound ->
                 try {
-                    Uri.parse(alarmtone.uriString)
+                    Uri.parse((alarmtone as Alarmtone.Sound).uriString)
                 } catch (e: Exception) {
                     RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
                 }

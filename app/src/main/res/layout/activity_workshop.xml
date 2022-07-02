@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".features.contacts.ContactsActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.rymo.felfel.view.BaseToolbar
+            android:id="@+id/toolbarView"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:bt_background="?colorPrimary"
+            app:bt_showBack="true"
+            app:bt_tint="?colorOnPrimary"
+            app:bt_title="@string/workshop">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/simCardBtn"
+                android:layout_gravity="end|center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_sim_card"
+                app:tint="?colorOnPrimary" />
+
+        </com.rymo.felfel.view.BaseToolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contactsRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
+            android:clipToPadding="false"
+            android:paddingBottom="120dp"
+            tools:listitem="@layout/group_list_item" />
+
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/addNewContact"
+            app:backgroundTint="?colorPrimary" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

@@ -18,6 +18,7 @@
 package com.rymo.felfel.model
 
 import com.rymo.felfel.BuildConfig
+import com.rymo.felfel.common.toast
 import com.rymo.felfel.configuration.Prefs
 import com.rymo.felfel.configuration.Store
 import com.rymo.felfel.interfaces.Alarm
@@ -29,6 +30,7 @@ import com.rymo.felfel.statemachine.StateMachine
 import com.rymo.felfel.stores.modify
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar

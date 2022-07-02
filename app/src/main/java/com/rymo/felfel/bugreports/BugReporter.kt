@@ -47,15 +47,15 @@ class BugReporter(
           )
       applicationLogFileDir = Directory.ROOT
       // setApplicationLogFile(context.getFileStreamPath("app.log").absolutePath)
-      mailSender {
-        mailTo = BuildConfig.ACRA_EMAIL
-        reportAsFile = true
-        reportFileName = "application-logs.txt"
-        enabled = true
-        subject =
-            "${context.getString(R.string.simple_alarm_clock)} ${BuildConfig.FLAVOR} ${BuildConfig.VERSION_NAME} Bug Report"
-        body = context.getString(R.string.dialog_bugreport_hint)
-      }
+//      mailSender {
+//        mailTo = BuildConfig.ACRA_EMAIL
+//        reportAsFile = true
+//        reportFileName = "application-logs.txt"
+//        enabled = true
+//        subject =
+//            "${context.getString(R.string.simple_alarm_clock)} ${BuildConfig.FLAVOR} ${BuildConfig.VERSION_NAME} Bug Report"
+//        body = context.getString(R.string.dialog_bugreport_hint)
+//      }
     }
 
     val prev = Thread.currentThread().uncaughtExceptionHandler

@@ -7,23 +7,34 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rymo.felfel.R
 import com.rymo.felfel.common.*
 import com.rymo.felfel.data.preferences.Setting
+import com.rymo.felfel.database.RoomAppDatabase
+import com.rymo.felfel.database.createDataBaseInstance
+import com.rymo.felfel.database.dao.SmsMessageDao
 import com.rymo.felfel.databinding.ActivityMainBinding
 import com.rymo.felfel.features.aboutMe.AboutMeActivity
 import com.rymo.felfel.features.alarm.alarmList.AlarmsListActivity
+import com.rymo.felfel.features.common.adapter.ContactListAdapter
 import com.rymo.felfel.features.contacts.ContactsActivity
 import com.rymo.felfel.features.group.GroupActivity
 import com.rymo.felfel.features.main.dialog.AddAutoReplyTextDialog
 import com.rymo.felfel.features.reports.ReportsActivity
+import com.rymo.felfel.features.workshop.WorkshopActivity
+import com.rymo.felfel.model.Contact
 import com.rymo.felfel.receiver.sms.SMSReceiverImpl
+import com.rymo.felfel.view.scroll.ObservableScrollViewCallbacks
+import com.rymo.felfel.view.scroll.ScrollState
 import timber.log.Timber
 
 
 class MainActivity : Base.BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var appDatabase: RoomAppDatabase
+    private lateinit var smsMessageDao: SmsMessageDao
 
     companion object {
         fun start(mActivity: Activity) {
@@ -43,8 +54,55 @@ class MainActivity : Base.BaseActivity() {
 
 
     private fun init() {
+        initDatabase()
         initSmsReceivedService()
         initClick()
+        initList()
+        initScroll()
+    }
+
+    private fun initScroll() {
+        binding.headerLyt.post {
+            val videoCoverImageView = binding.headerLyt
+            val coverIvHeight = binding.headerLyt.height
+            binding.scrollView.addScrollViewCallbacks(object : ObservableScrollViewCallbacks {
+                override fun onScrollChanged(
+                    scrollY: Int,
+                    firstScroll: Boolean,
+                    dragging: Boolean
+                ) {
+                    videoCoverImageView.translationY = scrollY.toFloat() / 2
+                }
+
+                override fun onDownMotionEvent() {
+                }
+
+                override fun onUpOrCancelMotionEvent(scrollState: ScrollState?) {
+                }
+
+            })
+        }
+    }
+
+    private fun initDatabase() {
+        appDatabase = createDataBaseInstance(this)
+        smsMessageDao = appDatabase.smsMessageDao()
+    }
+
+    private fun initList() {
+
+        binding.rvInbox.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = ContactListAdapter(false) { position, longClick, contact ->
+
+            }
+        }
+        val contacts: MutableList<Contact> = ArrayList()
+        smsMessageDao.getInbox().convertListToMutableList().forEach {
+            contacts.add(Contact(0, it.from, it.name, it.companyName, it.message, date = it.date))
+        }
+        (binding.rvInbox.adapter as ContactListAdapter).contacts = contacts
+
     }
 
     private fun initClick() {
@@ -53,14 +111,15 @@ class MainActivity : Base.BaseActivity() {
 
         binding.llAlarm.setOnClickListener { AlarmsListActivity.start(this) }
 
-        binding.llRepost.setOnClickListener { ReportsActivity.start(this) }
+        binding.reportBtn.setOnClickListener { ReportsActivity.start(this) }
 
         binding.llGroup.setOnClickListener { GroupActivity.start(this) }
 
         binding.aboutMeBtn.setOnClickListener { AboutMeActivity.start(this) }
 
-        binding.autoReplyBtn.setOnClickListener { AddAutoReplyTextDialog(this).show(supportFragmentManager,"ADD_AUTO_TEXT_MESSAGE") }
+        binding.autoReplyBtn.setOnClickListener { AddAutoReplyTextDialog(this).show(supportFragmentManager, "ADD_AUTO_TEXT_MESSAGE") }
 
+        binding.llWorkshop.setOnClickListener { WorkshopActivity.start(this) }
     }
 
 

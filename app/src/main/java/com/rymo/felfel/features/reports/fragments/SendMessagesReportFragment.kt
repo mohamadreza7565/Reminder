@@ -8,7 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.rymo.felfel.R
 import com.rymo.felfel.common.Base
+import com.rymo.felfel.common.reportFile
+import com.rymo.felfel.common.share
 import com.rymo.felfel.databinding.FragmentSendMessagesReportBinding
+import com.rymo.felfel.features.common.dialog.ShareFileDialog
+import com.rymo.felfel.features.common.dialog.ShareType
 import com.rymo.felfel.features.detailsReport.DetailsReportActivity
 import com.rymo.felfel.features.detailsReport.enum.ReportType
 import com.rymo.felfel.features.reports.ReportsActivity
@@ -65,7 +69,20 @@ class SendMessagesReportFragment : Base.BaseFragment() {
 
     private fun reportListAdapter() = ReportListAdapter { longClick, smsMessageSendTime ->
         if (longClick) {
-
+            ShareFileDialog(requireContext()) {
+                when (it) {
+                    ShareType.TEXT -> {
+                        reportFile(requireContext(),smsMessageSendTime.date,smsMessageSendTime.time,"txt"){
+                            it.share(requireContext())
+                        }
+                    }
+                    ShareType.EXCEL -> {
+                        reportFile(requireContext(),smsMessageSendTime.date,smsMessageSendTime.time,"xls") {
+                            it.share(requireContext())
+                        }
+                    }
+                }
+            }.show(childFragmentManager,"SHARE")
         } else {
             DetailsReportActivity.start(
                 requireActivity(),

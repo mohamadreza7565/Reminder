@@ -20,12 +20,16 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import com.google.android.material.snackbar.Snackbar
+import com.rymo.felfel.BuildConfig
 import com.rymo.felfel.R
 import com.rymo.felfel.configuration.AlarmApplication
+import com.rymo.felfel.database.createDataBaseInstance
+import com.rymo.felfel.repo.ExcelRepoImpl
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -306,3 +310,30 @@ fun String.convertArabic(): String {
     return sb.toString()
 }
 
+fun File.share(mContext: Context) {
+
+    if (!this.exists()) {
+        toast("فایل یافت نشد")
+        return
+    }
+
+    val contentUri: Uri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", this)
+
+    val shareIntent = Intent(Intent.ACTION_SEND)
+    shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+    shareIntent.type = "text/plain"
+    mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(com.rymo.felfel.R.string.share)))
+}
+
+fun reportFile(mContext: Context, date: String, time: String, format: String, onResult: (File) -> Unit) {
+    val fileName = "${date.replace("/", "-")}_${time}.${format}"
+    val direct = File("${AlarmApplication.instance!!.getExternalFilesDir(null)!!.path}/Reports")
+    val file = File("${direct.path}/$fileName")
+    if (file.exists())
+        onResult.invoke(file)
+    else {
+        ExcelRepoImpl(createDataBaseInstance(mContext)) {
+            onResult.invoke(file)
+        }.exportReports(time, date)
+    }
+}

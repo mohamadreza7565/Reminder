@@ -18,7 +18,9 @@ import com.rymo.felfel.model.*
         SmsMessageModel::class,
         SmsMessageSendTime::class,
         ExportSmsMessage::class,
-    ], version = 3
+        InboxSmsModel::class,
+        WorkshopModel::class,
+    ], version = 4
 )
 abstract class RoomAppDatabase : RoomDatabase() {
 

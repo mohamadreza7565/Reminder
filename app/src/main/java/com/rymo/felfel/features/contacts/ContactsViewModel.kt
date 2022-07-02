@@ -15,6 +15,7 @@ import com.rymo.felfel.database.dao.ContactDao
 import com.rymo.felfel.model.Contact
 import com.rymo.felfel.model.ContactGroup
 import com.rymo.felfel.model.Group
+import com.rymo.felfel.model.WorkshopModel
 import com.rymo.felfel.repo.ExcelRepoImpl
 import com.rymo.felfel.repo.ExcelRepository
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,7 @@ class ContactsViewModel(
 
     private var contactDao: ContactDao = appDatabase.contactDao()
     public val contactListLiveData = MutableLiveData<MutableList<Contact>>()
+    public val workshopListLiveData = MutableLiveData<MutableList<WorkshopModel>>()
     public val groupListLiveData = MutableLiveData<MutableList<Group>>()
     public val contactsGroupListLiveData = MutableLiveData<MutableList<Contact>>()
     public val contacts: MutableList<Contact> = ArrayList()
@@ -47,7 +49,7 @@ class ContactsViewModel(
 
     fun getGroups() = groupListLiveData.postValue(contactDao.getGroups().convertListToMutableList())
 
-    fun getContactsGroup(groupId: Long) : MutableList<Contact> {
+    fun getContactsGroup(groupId: Long): MutableList<Contact> {
         val contactsGroup = contactDao.getContactsGroup(groupId).convertListToMutableList()
         val contacts = contactDao.getContactsGroup(contactsGroup)
         contactsGroupListLiveData.postValue(contacts.convertListToMutableList())
@@ -62,6 +64,10 @@ class ContactsViewModel(
 
     fun addGroup(group: Group) {
         contactDao.createGroup(group)
+    }
+
+    fun editGroup(group: Group) {
+        contactDao.editGroup(group)
     }
 
     fun deleteContact(contact: Contact) {
@@ -99,10 +105,25 @@ class ContactsViewModel(
     fun contactsGroup(group: Group) = contactDao.getContactsGroup(group.id).convertListToMutableList()
 
 
-    fun export() {
+    fun exportContact() {
         excelRepository.exportContacts(contactListLiveData.value!!)
     }
 
+    fun exportWorkshop() {
+        excelRepository.exportWorkshop()
+    }
+
     fun exportLiveData() = excelRepository.exportExcelLiveData
+
+    fun getWorkshopList(){
+        workshopListLiveData.postValue(contactDao.getWorkshopList().convertListToMutableList())
+    }
+
+    fun addWorkshopContact(workshopModel: WorkshopModel) = contactDao.insetContactWorkshop(workshopModel)
+
+    fun deleteWorkshop(workshopModel: WorkshopModel) = contactDao.deleteWorkshop(workshopModel)
+
+    fun editWorkshop(workshopModel: WorkshopModel) = contactDao.editWorkshop(workshopModel)
+
 
 }

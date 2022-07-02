@@ -2,6 +2,7 @@ package com.rymo.felfel.database.dao
 
 import androidx.room.*
 import com.rymo.felfel.model.ExportSmsMessage
+import com.rymo.felfel.model.InboxSmsModel
 import com.rymo.felfel.model.SmsMessageModel
 import com.rymo.felfel.model.SmsMessageSendTime
 
@@ -35,6 +36,9 @@ interface SmsMessageDao {
     @Query("SELECT * FROM tbl_sms_message WHERE replayText != :replay AND date = :date AND time = :time")
     fun getAllReplaySmsMessage(replay: String = "", date: String, time: String): List<SmsMessageModel>
 
+    @Query("SELECT * FROM tbl_sms_message WHERE replayText != :replay")
+    fun getSmsInbox(replay: String = ""): List<SmsMessageModel>
+
     @Query("SELECT * FROM tbl_sms_message WHERE replayText = :replay AND date = :date AND time = :time")
     fun getAllNoReplaySmsMessage(replay: String = "", date: String, time: String): List<SmsMessageModel>
 
@@ -53,5 +57,10 @@ interface SmsMessageDao {
     @Update
     fun updateMessage(smsMessageModel: SmsMessageModel)
 
+    @Insert
+    fun saveToInbox(inboxMessageModel: InboxSmsModel): Long
+
+    @Query("SELECT * FROM tbl_inbox_sms")
+    fun getInbox(): List<InboxSmsModel>
 
 }

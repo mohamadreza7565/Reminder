@@ -34,10 +34,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.rymo.felfel.R
 import com.rymo.felfel.checkPermissions
-import com.rymo.felfel.common.SimUtil
-import com.rymo.felfel.common.getTimeFromLong
-import com.rymo.felfel.common.showSnackBar
-import com.rymo.felfel.common.toast
+import com.rymo.felfel.common.*
 import com.rymo.felfel.configuration.Layout
 import com.rymo.felfel.configuration.Prefs
 import com.rymo.felfel.configuration.globalInject
@@ -136,6 +133,7 @@ class AlarmDetailsFragment : Fragment() {
         onCreateContactView()
         onCreateDelayView()
         onCreateSimCardView()
+        handlerRingtonePickerResult()
 
         store.transitioningToNewAlarmDetails().takeFirst { isNewAlarm ->
             if (isNewAlarm) {
@@ -314,14 +312,19 @@ class AlarmDetailsFragment : Fragment() {
         val sims = SimUtil.getSimCount()
 
         observeEditor { value ->
-            val sim = sims.find { value.simId == it.subscriptionId }
-            if (sim != null) {
-                detailsSim.text = sim.carrierName
-                mViewModel.simCardSelected = sim.subscriptionId
+            if (value.simId == Constants.API_ID) {
+                mViewModel.simCardSelected = Constants.API_ID
+                detailsSim.text = "از طریق سرور"
             } else {
-                val defaultSim = sims.first()
-                detailsSim.text = defaultSim.carrierName
-                mViewModel.simCardSelected = defaultSim.subscriptionId
+                val sim = sims.find { value.simId == it.subscriptionId }
+                if (sim != null) {
+                    detailsSim.text = sim.carrierName
+                    mViewModel.simCardSelected = sim.subscriptionId
+                } else {
+                    val defaultSim = sims.first()
+                    detailsSim.text = defaultSim.carrierName
+                    mViewModel.simCardSelected = defaultSim.subscriptionId
+                }
             }
         }
 
@@ -329,10 +332,10 @@ class AlarmDetailsFragment : Fragment() {
         // modify long in editor
 
         detailsSimRow.setOnClickListener {
-            SelectSimCardDialog(requireContext(), mViewModel.simCardSelected) { _simCard ->
+            SelectSimCardDialog(requireContext(), mViewModel.simCardSelected) { _simCardId ->
                 editor.takeFirst {
-                    mViewModel.simCardSelected = _simCard.subscriptionId
-                    modify("SimId") { prev -> prev.copy(simId = _simCard.subscriptionId, isEnabled = true) }
+                    mViewModel.simCardSelected = _simCardId
+                    modify("SimId") { prev -> prev.copy(simId = _simCardId, isEnabled = true) }
                 }
             }.show(childFragmentManager, "SELECT_SIM_CARD")
         }
@@ -419,30 +422,13 @@ class AlarmDetailsFragment : Fragment() {
         disposables.dispose()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data != null && requestCode == ringtonePickerRequestCode) {
-            handlerRingtonePickerResult(data)
-        }
-    }
+    private fun handlerRingtonePickerResult() {
 
-    private fun handlerRingtonePickerResult(data: Intent) {
-        val alert: String? =
-            data.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)?.toString()
-
-        logger.debug { "Got ringtone: $alert" }
-
-        val alarmtone =
-            when (alert) {
-                null -> Alarmtone.Silent
-                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString() -> Alarmtone.Default
-                else -> Alarmtone.Sound(alert)
-            }
-
-        logger.debug { "onActivityResult $alert -> $alarmtone" }
+        val alarmtone = Alarmtone.Silent
 
         checkPermissions(requireActivity(), listOf(alarmtone))
 
-        modify("Ringtone picker") { prev -> prev.copy(alarmtone = alarmtone, isEnabled = true) }
+        modify("Ringtone picker") { prev -> prev.copy(alarmtone = Alarmtone.Silent, isEnabled = true) }
     }
 
     fun Ringtone?.title(): CharSequence {
@@ -468,6 +454,8 @@ class AlarmDetailsFragment : Fragment() {
 
     private fun saveAlarm() {
         editor.takeFirst { value ->
+            value.alarmtone = Alarmtone.Silent
+            value.isVibrate = false
             alarms.getAlarm(alarmId)?.run { edit { withChangeData(value) } }
             store.hideDetails(rowHolder)
             rowHolder.animateCheck(check = false)

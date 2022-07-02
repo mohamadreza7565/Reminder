@@ -3,11 +3,9 @@ package com.rymo.felfel.features.contacts
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rymo.felfel.R
 import com.rymo.felfel.common.*
@@ -17,10 +15,8 @@ import com.rymo.felfel.features.common.dialog.ConfirmDialog
 import com.rymo.felfel.features.contacts.dialog.AddContactDialog
 import com.rymo.felfel.features.contacts.dialog.OptionContactDialog
 import com.rymo.felfel.features.contacts.dialog.OptionContactType
-import com.rymo.felfel.features.reports.ReportsActivity
 import com.rymo.felfel.model.Contact
 import kotlinx.android.synthetic.main.activity_contacts.*
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContactsActivity : Base.BaseActivity() {
@@ -128,16 +124,19 @@ class ContactsActivity : Base.BaseActivity() {
     }
 
     private fun optionDialog(contact: Contact, position: Int) = OptionContactDialog(this) {
-        when {
-            it == OptionContactType.DELETE -> {
+        when (it) {
+            OptionContactType.DELETE -> {
                 var content = "${getString(R.string.deleteFromAlarmContactWhenContactDeleted)}\n"
                 content += getString(R.string.doYouWantDeleteContact)
                 confirmDialog(content) {
                     mViewModel.deleteContact(contact)
                     mViewModel.contactListLiveData.value!!.removeAt(position)
                     mViewModel.contactListLiveData.postValue(mViewModel.contactListLiveData.value)
-                    mViewModel.export()
+                    mViewModel.exportContact()
                 }
+            }
+            OptionContactType.EDIT -> {
+                addContactDialog(contact)
             }
         }
     }
@@ -153,7 +152,7 @@ class ContactsActivity : Base.BaseActivity() {
                 setResult(Activity.RESULT_OK, Intent())
                 finish()
             } else {
-                addContactDialog().show(supportFragmentManager, "ADD_CONTACT")
+                addContactDialog()
             }
         }
 
@@ -166,13 +165,17 @@ class ContactsActivity : Base.BaseActivity() {
         mViewModel.addContactsToGroup(intent.getLongExtra(Constants.KEY_EXTRA_ID, 0))
     }
 
-    private fun addContactDialog() =
-        AddContactDialog(this) {
-            mViewModel.addContact(it)
-            mViewModel.contactListLiveData.value!!.add(it)
-            mViewModel.contactListLiveData.postValue(mViewModel.contactListLiveData.value)
-            mViewModel.export()
-        }
+    private fun addContactDialog(contact: Contact? = null) =
+        AddContactDialog(this, contact = contact) {
+            if (contact == null) {
+                mViewModel.addContact(it)
+            } else {
+                it.id = contact.id
+                mViewModel.editContact(it)
+            }
+            mViewModel.getContacts()
+            mViewModel.exportContact()
+        }.show(supportFragmentManager, "ADD_CONTACT")
 
 
 }
