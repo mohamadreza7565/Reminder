@@ -15,7 +15,7 @@ buildscript {
   }
 }
 
-plugins { id("com.diffplug.spotless") version "6.5.1"
+plugins { id("com.diffplug.spotless") version "6.9.0"
     id("org.jetbrains.kotlin.android") version "1.6.10" apply false
 }
 
